@@ -3,24 +3,15 @@
 // of the page.
 
 import React from 'react'
-import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
-
-const Hello = props => (
-  <div>Hello {props.name}!</div>
-)
-
-Hello.defaultProps = {
-  name: 'David'
-}
-
-Hello.propTypes = {
-  name: PropTypes.string
-}
+import { render } from 'react-dom'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Popper from 'popper.js';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+import TestComponent from '../components/TestComponent';
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <Hello name="React" />,
+  render(
+    <TestComponent />,
     document.body.appendChild(document.createElement('div')),
   )
 })
