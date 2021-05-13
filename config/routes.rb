@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      get 'brands/', to: 'brand#index'
+      post 'brands/', to: 'brand#create'
+      get 'brands/:id', to: 'brand#show'
+      delete 'brands/:id', to: 'brand#destroy'
+    end
+  end
+  namespace :api do
+    namespace :v1 do
       get 'categories/', to: 'category#index'
       post 'categories/', to: 'category#create'
       get 'categories/:id', to: 'category#show'
