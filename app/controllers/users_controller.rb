@@ -10,9 +10,9 @@ class UsersController < ApplicationController
     if @user.valid?
       @user.save
       token = encode_token({user_id: @user.id})
-      render json: @user, token: token
+      render json: {success:true, data: UserSerializer.new(@user), token: token}, status:201
     else
-      render json: {error: "Invalid username or password"}
+      render json: {success: false, error: "Invalid username or password"}, status: 400
     end
   end
 
@@ -22,9 +22,9 @@ class UsersController < ApplicationController
     @pass = BCrypt::Password.new(@user.password_digest)
     if @user && @user.password_digest == @pass
       token = encode_token({user_id: @user.id})
-      render json: {user: @user, token: token}
+      render json: {success: true, data: UserSerializer.new(@user), token: token}, status: 201
     else
-      render json: {error: "Invalid username or password"}
+      render json: {success: false, error: "Invalid username or password"}, status: 400
     end
   end
 
