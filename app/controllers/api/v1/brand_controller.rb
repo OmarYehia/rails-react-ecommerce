@@ -1,43 +1,50 @@
-class Api::V1::CategoryController < ApplicationController
+class Api::V1::BrandController < ApplicationController
   # Skipping token for testing purpose
   skip_before_action :verify_authenticity_token
 
-  
   def index
-    categories = Category.all
+    brands = Brand.all
     render json: {
       success: true,
-      totalRecords: categories.length,
-      data: (ActiveModel::ArraySerializer.new(categories, each_serializer: CategorySerializer))
+      totalRecords: brands.length,
+      data: (ActiveModel::ArraySerializer.new(brands, each_serializer: BrandSerializer))
     }, status: 200
   end
 
   def create
-    category = Category.new(category_params)
-    if category.save()
-      render json: {
-        success: true,
-        data: CategorySerializer.new(category)
-      }, status: 201
-    else
+    begin
+      category = Category.find(params[:category_id])
+      brand = category.brands.new(brand_params)
+      if brand.save()
+        render json: {
+          success: true,
+          data: BrandSerializer.new(brand)
+        }, status: 201
+      else
+        render json: {
+          success: false,
+          errors: brand.errors
+        }, status: 400
+      end
+    rescue ActiveRecord::RecordNotFound => e
       render json: {
         success: false,
-        errors: category.errors
-      }, status: 400
-    end
+        errors: e.message
+      }, status: 404
     rescue Exception => e
       render json: {
         success: false,
         errors: e.message
       }, status: 500
+    end
   end
 
   def show
     begin
-      category = Category.find(params[:id])
+      brand = Brand.find(params[:id])
       render json: {
         success: true,
-        data: CategorySerializer.new(category)
+        data: BrandSerializer.new(brand)
       } , status: 200
     rescue ActiveRecord::RecordNotFound => e
       render json: {
@@ -54,8 +61,8 @@ class Api::V1::CategoryController < ApplicationController
 
   def destroy
     begin
-      category = Category.find(params[:id])
-      category.delete()
+      brand = Brand.find(params[:id])
+      brand.delete()
       render json: {
         success: true,
       }, status: 202
@@ -73,7 +80,7 @@ class Api::V1::CategoryController < ApplicationController
   end
 
   private
-  def category_params
-    params.permit(:name, :image)
+  def brand_params
+    params.permit(:name)
   end
 end

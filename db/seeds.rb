@@ -5,4 +5,20 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+<<<<<<< HEAD
 user = User.create(username: "yehia", password_digest: "123456", email: "yehia@yehia.com")
+=======
+Category.destroy_all
+
+category = Category.new(
+    {
+        name: "Electronics",
+    }
+)
+
+category.image.attach(io: File.open('app/assets/images/electronics.jpg'), filename: 'electronics.jpg')
+category.save()
+    
+
+
+>>>>>>> ebc09edad453918c9c1d84c2d94d558fb16c1870
