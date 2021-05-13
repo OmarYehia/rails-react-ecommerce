@@ -26,6 +26,11 @@ class Api::V1::CategoryController < ApplicationController
         errors: category.errors
       }, status: 400
     end
+    rescue Exception => e
+      render json: {
+        success: false,
+        errors: e.message
+      }, status: 500
   end
 
   def show
@@ -35,11 +40,16 @@ class Api::V1::CategoryController < ApplicationController
         success: true,
         data: CategorySerializer.new(category)
       } , status: 200
-    rescue ActiveRecord::RecordNotFound => e
+    rescue ActiveRecord::RecordNotFound
       render json: {
         success: false,
         errors: { category: "Not found." } 
       }, status: 404
+    rescue Exception => e
+      render json: {
+        success: false,
+        errors: e.message
+      }, status: 500
     end
   end
 
@@ -50,11 +60,16 @@ class Api::V1::CategoryController < ApplicationController
       render json: {
         success: true,
       }, status: 202
-    rescue ActiveRecord::RecordNotFound => e
+    rescue ActiveRecord::RecordNotFound
       render json: {
         success: false,
         errors: { category: "Not found." } 
       }, status: 404
+    rescue Exception => e
+      render json: {
+        success: false,
+        errors: e.message
+      }, status: 500
     end
   end
 
