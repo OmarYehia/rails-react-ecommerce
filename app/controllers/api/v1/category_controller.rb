@@ -5,17 +5,20 @@ class Api::V1::CategoryController < ApplicationController
   
   def index
     categories = Category.all
-    byebug
-    render json: categories
+   
+    render json: {
+      success: true,
+      totalRecords: categories.length,
+      data: (ActiveModel::ArraySerializer.new(categories, each_serializer: CategorySerializer))
+    }, status: 200
   end
 
   def create
     category = Category.new(category_params)
     if category.save()
-      byebug
       render json: {
         success: true,
-        category: category
+        data: CategorySerializer.new(category)
       }, status: 201
     else
       render json: {
@@ -26,14 +29,33 @@ class Api::V1::CategoryController < ApplicationController
   end
 
   def show
-    category = Category.find(params[:id])
-    render json: {
-      name: category.name,
-      imageUrl: category.get_image_url()
-    }
+    begin
+      category = Category.find(params[:id])
+      render json: {
+        success: true,
+        data: CategorySerializer.new(category)
+      } , status: 200
+    rescue ActiveRecord::RecordNotFound => e
+      render json: {
+        success: false,
+        errors: { category: "Not found." } 
+      }, status: 404
+    end
   end
 
   def destroy
+    begin
+      category = Category.find(params[:id])
+      category.delete()
+      render json: {
+        success: true,
+      }, status: 202
+    rescue ActiveRecord::RecordNotFound => e
+      render json: {
+        success: false,
+        errors: { category: "Not found." } 
+      }, status: 404
+    end
   end
 
   private
