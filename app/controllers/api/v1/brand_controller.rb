@@ -81,6 +81,6 @@ class Api::V1::BrandController < ApplicationController
 
   private
   def brand_params
-    params.permit(:name)
+    params.permit(:name, :image)
   end
 end
