@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     if @user.valid?
       @user.save
       token = encode_token({user_id: @user.id})
-      render json: {user: @user["username"], msg: params[:password_digest], token: token}
+      render json: @user, token: token
     else
       render json: {error: "Invalid username or password"}
     end
