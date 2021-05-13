@@ -1,5 +1,9 @@
 class BrandSerializer < ActiveModel::Serializer
-  attributes :id, :name, :category
+  attributes :id, :name, :imageUrl, :category
+
+  def imageUrl
+    object.get_image_url
+  end
 
   def category
     return {
