@@ -1,8 +1,8 @@
 class Category < ApplicationRecord
     include Rails.application.routes.url_helpers
 
-    has_many :brands
-    has_one_attached :image
+    has_many :brands, dependent: :nullify
+    has_one_attached :image, dependent: :destroy
     validates :name, presence: true, uniqueness: true
     validates :image, presence: true, blob: { content_type: ['image/jpg', 'image/jpeg', 'image/png'] }
 
