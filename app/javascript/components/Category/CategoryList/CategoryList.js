@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CategoryCard from "../CategoryCard/CategoryCard";
 import "./CategoryList.css";
+import { Link } from "react-router-dom";
 
 const CategoryList = () => {
   const [categories, setCategories] = useState(null);
@@ -18,12 +19,20 @@ const CategoryList = () => {
   }, []);
 
   return (
-    <div className="category-container">
+    <div>
       <h1>Categories</h1>
-      {categories &&
-        categories.map((category) => (
-          <CategoryCard categoryId={category.id} key={category.id} />
-        ))}
+      <div className="category-container">
+        {categories &&
+          categories.map((category) => (
+            <Link
+              className="card-cont"
+              to={`${category.name}/brands`}
+              key={category.id}
+            >
+              <CategoryCard categoryId={category.id} />
+            </Link>
+          ))}
+      </div>
     </div>
   );
 };

@@ -1,6 +1,5 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import "./CategoryCard.css";
 
 const CategoryCard = ({ categoryId }) => {
@@ -18,17 +17,10 @@ const CategoryCard = ({ categoryId }) => {
   }, []);
 
   return (
-    <div className="card category-card">
+    <div className="card category-card shadow-sm">
       {category && <img className="category-image" src={category.imageUrl} />}
       <div className="card-body">
-        {category && (
-          <Link
-            to={`/api/v1/categories/${category.id}/brands`}
-            className="card-text"
-          >
-            {category.name}
-          </Link>
-        )}
+        {category && <p className="card-text">{category.name}</p>}
       </div>
     </div>
   );
