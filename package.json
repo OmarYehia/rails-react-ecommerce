@@ -2,20 +2,25 @@
   "name": "rails_react_ecommerce",
   "private": true,
   "dependencies": {
-    "@babel/preset-react": "^7.13.13",
     "@rails/webpacker": "5.3.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bootstrap": "^5.0.0",
+    "dotenv": "^9.0.2",
     "popper.js": "^1.16.1",
     "postcss": "8.2.10",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
-    "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
-    "webpack-dev-server": "^3.11.2"
+    "@babel/core": "^7.14.2",
+    "webpack": "^4.46.0",
+    "webpack-dev-server": "^3.11.2",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.2"
   }
 }
