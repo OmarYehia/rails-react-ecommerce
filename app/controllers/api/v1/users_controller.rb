@@ -10,21 +10,39 @@ class Api::V1::UsersController < ApplicationController
     if @user.valid?
       @user.save
       token = encode_token({user_id: @user.id})
-      render json: {success:true, data: UserSerializer.new(@user), token: token}, status:201
+      render json: {
+        success:true, 
+        data: UserSerializer.new(@user), 
+        token: token}, 
+        status:201
     else
-      render json: {success: false, error: "Invalid username or password"}, status: 400
+      render json: {
+        success: false, 
+        error: "Invalid email or password"},
+        status: 400
     end
+    rescue Exception => e
+      render json: {
+        success: false,
+        errors: e.message
+      }, status: 500
   end
 
   # LOGGING IN
   def login
     @user = User.find_by(email: params[:email])
-    @pass = BCrypt::Password.new(@user.password_digest)
-    if @user && @user.password_digest == @pass
+    if @user && BCrypt::Password.new(@user.password_digest) == params[:password_digest]
       token = encode_token({user_id: @user.id})
-      render json: {success: true, data: UserSerializer.new(@user), token: token}, status: 201
+      render json: {
+        success: true, 
+        data: UserSerializer.new(@user), 
+        token: token}, 
+        status: 201
     else
-      render json: {success: false, error: "Invalid username or password"}, status: 400
+      render json: {
+        success: false,
+        error: "Invalid email or password"},
+        status: 400
     end
   end
 

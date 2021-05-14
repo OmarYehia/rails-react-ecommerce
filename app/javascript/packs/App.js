@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import BrandList from "../components/Brand/BrandList/BrandList";
 import CategoryList from "../components/Category/CategoryList/CategoryList";
+import LoginForm from "../components/Auth/LoginForm";
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
             </Route>
             <Route path="/categories/:categoryId/brands">
               <BrandList />
+            </Route>
+            <Route path="/login">
+              <LoginForm />
             </Route>
             {/* <Route path="*"><NotFound /></Route> */}
           </Switch>
