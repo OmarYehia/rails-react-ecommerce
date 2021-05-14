@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import BrandList from "../components/Brand/BrandList/BrandList";
 import CategoryList from "../components/Category/CategoryList/CategoryList";
 
 function App() {
@@ -12,10 +13,12 @@ function App() {
             <Route exact path="/">
               {/* <Home /> */}
             </Route>
-            <Route path="/categories">
+            <Route exact path="/categories">
               <CategoryList />
             </Route>
-            <Route path="/:category/brands">{/* Some view */}</Route>
+            <Route path="/categories/:categoryId/brands">
+              <BrandList />
+            </Route>
             {/* <Route path="*"><NotFound /></Route> */}
           </Switch>
         </div>

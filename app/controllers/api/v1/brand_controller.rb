@@ -3,12 +3,25 @@ class Api::V1::BrandController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    brands = Brand.all
-    render json: {
-      success: true,
-      totalRecords: brands.length,
-      data: (ActiveModel::ArraySerializer.new(brands, each_serializer: BrandSerializer))
-    }, status: 200
+    begin
+      category = Category.find(params[:category_id])
+      brands = category.brands
+      render json: {
+        success: true,
+        totalRecords: brands.length,
+        data: (ActiveModel::ArraySerializer.new(brands, each_serializer: BrandSerializer))
+      }, status: 200
+    rescue ActiveRecord::RecordNotFound => e
+      render json: {
+        success: false,
+        errors: e.message
+      }, status: 404
+    rescue Exception => e
+      render json: {
+        success: false,
+        errors: e.message
+      }, status: 500
+    end
   end
 
   def create
