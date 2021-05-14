@@ -7,10 +7,12 @@ const CategoryList = () => {
   const [categories, setCategories] = useState(null);
 
   useEffect(() => {
-    console.log(process.env.HOST);
-    fetch(`api/v1/categories`)
-      .then((res) => res.json())
+    fetch(`/api/v1/categories`)
+      .then((res) => {
+        return res.json();
+      })
       .then((data) => {
+        console.log(data);
         setCategories(data.data);
       })
       .catch((err) => {
@@ -26,10 +28,10 @@ const CategoryList = () => {
           categories.map((category) => (
             <Link
               className="card-cont"
-              to={`${category.name}/brands`}
+              to={`${category.id}/brands`}
               key={category.id}
             >
-              <CategoryCard categoryId={category.id} />
+              <CategoryCard category={category} />
             </Link>
           ))}
       </div>

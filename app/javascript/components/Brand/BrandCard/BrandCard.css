@@ -1,0 +1,27 @@
+.brand-card {
+  width: 95%;
+  margin: 1rem;
+}
+
+.brand-image {
+  height: 10rem;
+  width: 100%;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 15px 0 10px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.card-body a {
+  text-align: center;
+  color: #333;
+  text-decoration: none;
+  transition: 0.2s ease-in;
+}
+
+.card-body a:hover {
+  color: rgb(51, 88, 155);
+}
