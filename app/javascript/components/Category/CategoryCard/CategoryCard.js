@@ -7,7 +7,7 @@ const CategoryCard = ({ categoryId }) => {
   const [category, setCategory] = useState(null);
 
   useEffect(() => {
-    fetch(`${process.env.HOST}api/v1/categories/${categoryId}`)
+    fetch(`api/v1/categories/${categoryId}`)
       .then((res) => res.json())
       .then((data) => {
         setCategory(data.data.category);
