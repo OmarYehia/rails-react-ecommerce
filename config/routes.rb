@@ -16,6 +16,6 @@ Rails.application.routes.draw do
     end
   end
   root 'landing_page#index'
-  get '/*path' => 'landing_page#index'
+  get '*path' => 'landing_page#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

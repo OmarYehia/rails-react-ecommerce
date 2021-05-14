@@ -1,20 +1,22 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import CategoryCard from "../components/Category/CategoryCard/CategoryCard";
+import CategoryList from "../components/Category/CategoryList/CategoryList";
 
 function App() {
   return (
     <Router>
       <div className="App">
         {/* <Navbar /> */}
-        <div className="content">
+        <div className="content container">
           <Switch>
             <Route exact path="/">
               {/* <Home /> */}
-              <CategoryCard categoryId="5" />
+            </Route>
+            <Route path="/categories">
+              <CategoryList />
             </Route>
             <Route path="/:category/brands">{/* Some view */}</Route>
-            <Route path="*">{/* <NotFound /> */}</Route>
+            {/* <Route path="*"><NotFound /></Route> */}
           </Switch>
         </div>
       </div>

@@ -10,6 +10,8 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import TestComponent from '../components/TestComponent';
 import App from './App'
 
+require('dotenv').config()
+
 document.addEventListener('DOMContentLoaded', () => {
   render(
     <App />,
