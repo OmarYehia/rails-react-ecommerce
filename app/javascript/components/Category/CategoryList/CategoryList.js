@@ -28,7 +28,7 @@ const CategoryList = () => {
           categories.map((category) => (
             <Link
               className="card-cont"
-              to={`${category.id}/brands`}
+              to={`/categories/${category.id}/brands`}
               key={category.id}
             >
               <CategoryCard category={category} />
