@@ -44,9 +44,13 @@ const CategoryForm = () => {
       formData.append("image", imageFile.files[0]);
       formData.append("name", name);
 
+      console.log(formData);
       fetch("/api/v1/categories", {
         method: "POST",
         body: formData,
+        headers: {
+          "X-CSRF-TOKEN": document.querySelector('[name="csrf-token"]').content,
+        },
       })
         .then((res) => {
           setIsPending(false);
@@ -69,8 +73,6 @@ const CategoryForm = () => {
           } else {
             setCategory(data.data.category);
             setIsAdded(true);
-            console.log(category);
-            console.log(data.data.category);
             document
               .querySelector("#categoryName")
               .classList.remove("is-invalid");
@@ -153,7 +155,14 @@ const CategoryForm = () => {
             className="btn btn-outline-primary"
             id="submitBtn"
           >
-            Please wait...
+            <div
+              className="spinner-border"
+              style={{ width: "1rem", height: "1rem" }}
+              role="status"
+            >
+              <span className="visually-hidden">Loading...</span>
+            </div>
+            &nbsp;&nbsp;Please wait...
           </button>
         )}
       </form>

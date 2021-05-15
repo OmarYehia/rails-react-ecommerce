@@ -1,0 +1,13 @@
+.category-form {
+  padding: 3rem 8rem;
+  border-radius: 5px;
+  width: 90%;
+}
+
+#current-image {
+  height: 15rem;
+  width: 100%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+}
