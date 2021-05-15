@@ -1,29 +1,29 @@
 import React, { useEffect, useState } from "react";
-import "./CategoryUpdateForm.css";
+import "./BrandUpdateForm.css";
 import { Link, useParams } from "react-router-dom";
 
-const CategoryUpdateForm = () => {
-  const { categoryId } = useParams();
+const BrandUpdateForm = () => {
+  const { brandId } = useParams();
   const [name, setName] = useState("");
   const [imageError, setImageError] = useState("");
   const [nameError, setNameError] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
-  const [category, setCategory] = useState(null);
-  const [isCategoryFound, setIsCategoryFound] = useState(true);
+  const [brand, setBrand] = useState(null);
+  const [isBrandFound, setIsBrandFound] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`/api/v1/categories/${categoryId}`)
+    fetch(`/api/v1/brands/${brandId}`)
       .then((res) => {
         return res.json();
       })
       .then((data) => {
-        setCategory(data.data.category);
-        setName(data.data.category.name);
+        setBrand(data.data.brand);
+        setName(data.data.brand.name);
       })
       .catch((err) => {
-        setIsCategoryFound(false);
+        setIsBrandFound(false);
         console.log(err);
       });
     setIsLoading(false);
@@ -37,12 +37,12 @@ const CategoryUpdateForm = () => {
         imageType != "image/jpg" &&
         imageType != "image/jpeg"
       ) {
-        document.querySelector("#categoryImage").classList.add("is-invalid");
+        document.querySelector("#brandImage").classList.add("is-invalid");
         setImageError("Please choose a .jpg, .jpeg or .png format only");
         return false;
       }
     }
-    document.querySelector("#categoryImage").classList.remove("is-invalid");
+    document.querySelector("#brandImage").classList.remove("is-invalid");
     setImageError("");
     return true;
   };
@@ -51,7 +51,7 @@ const CategoryUpdateForm = () => {
     e.preventDefault();
 
     const formData = new FormData();
-    const imageFile = document.querySelector("#categoryImage");
+    const imageFile = document.querySelector("#brandImage");
 
     setIsPending(true);
     setIsAdded(false);
@@ -62,7 +62,7 @@ const CategoryUpdateForm = () => {
       }
       formData.append("name", name);
 
-      fetch(`/api/v1/categories/${categoryId}`, {
+      fetch(`/api/v1/brands/${brandId}`, {
         method: "PUT",
         body: formData,
         headers: {
@@ -76,25 +76,20 @@ const CategoryUpdateForm = () => {
         .then((data) => {
           if (!data.success) {
             if (data.errors.name) {
-              document
-                .querySelector("#categoryName")
-                .classList.add("is-invalid");
+              document.querySelector("#brandName").classList.add("is-invalid");
               setNameError(data.errors.name);
             }
             if (data.errors.image) {
-              document
-                .querySelector("#categoryImage")
-                .classList.add("is-invalid");
+              document.querySelector("#brandImage").classList.add("is-invalid");
               setImageError(data.errors.image);
             }
           } else {
-            setCategory(data.data.category);
+            imageFile.value = null;
+            setBrand(data.data.brand);
             setIsAdded(true);
+            document.querySelector("#brandName").classList.remove("is-invalid");
             document
-              .querySelector("#categoryName")
-              .classList.remove("is-invalid");
-            document
-              .querySelector("#categoryImage")
+              .querySelector("#brandImage")
               .classList.remove("is-invalid");
             setNameError("");
             setImageError("");
@@ -117,39 +112,39 @@ const CategoryUpdateForm = () => {
           <span className="visually-hidden">Loading...</span>
         </div>
       )}
-      {!isCategoryFound && (
+      {!isBrandFound && (
         <div className="d-flex flex-column align-items-center">
-          <h1>Sorry, no matching categories found!</h1>
+          <h1>Sorry, no matching brands found!</h1>
         </div>
       )}
-      {category && (
+      {brand && (
         <form
           className="border category-form shadow-sm"
           onSubmit={handleSubmit}
         >
           {isAdded && (
             <div className="alert alert-success mb-3 text-center" role="alert">
-              Category {category.name} was updated successfully.
+              Brand '{brand.name}' was updated successfully.
               <Link
-                to={`/categories/${category.id}/brands/`}
+                to={`/categories/${brand.category.categoryId}/brands/`}
                 className="alert-link"
               >
                 <br />
                 Click here
               </Link>
-              &nbsp;to browse this category.
+              &nbsp;to browse products in this brand.
             </div>
           )}
-          <h1>Update Category</h1>
+          <h1>Update Brand</h1>
           <div className="mb-3">
-            <label htmlFor="category-name" className="form-label">
-              Category Name
+            <label htmlFor="brand-name" className="form-label">
+              Brand Name
             </label>
             <input
               type="text"
               className="form-control"
-              id="categoryName"
-              aria-describedby="categoryHelp"
+              id="brandName"
+              aria-describedby="brandHelp"
               required
               value={name}
               onChange={(e) => {
@@ -157,20 +152,20 @@ const CategoryUpdateForm = () => {
               }}
             />
             {nameError && (
-              <div id="categoryHelp" className="form-text text-danger">
+              <div id="brandHelp" className="form-text text-danger">
                 {nameError}
               </div>
             )}
           </div>
           <div className="mb-3">
-            <label htmlFor="categoryImage" className="form-label">
-              Category Image
+            <label htmlFor="brandImage" className="form-label">
+              Brand Image
             </label>
-            <img src={category.imageUrl} id="current-image" />
+            <img src={brand.imageUrl} id="current-image" />
             <input
               type="file"
               className="form-control"
-              id="categoryImage"
+              id="brandImage"
               aria-describedby="imageHelp"
             />
             {imageError && (
@@ -185,7 +180,7 @@ const CategoryUpdateForm = () => {
               className="btn btn-outline-primary"
               id="submitBtn"
             >
-              Update Category
+              Update Brand
             </button>
           )}
           {isPending && (
@@ -211,4 +206,4 @@ const CategoryUpdateForm = () => {
   );
 };
 
-export default CategoryUpdateForm;
+export default BrandUpdateForm;

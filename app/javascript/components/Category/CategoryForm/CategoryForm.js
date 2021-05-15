@@ -83,6 +83,9 @@ const CategoryForm = () => {
             setImageError("");
           }
           console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
         });
     }
   };

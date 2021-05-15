@@ -1,6 +1,6 @@
 class Api::V1::BrandController < ApplicationController
   # Skipping token for testing purpose
-  # skip_before_action :verify_authenticity_token
+  skip_before_action :verify_authenticity_token
 
   def index
     begin
@@ -59,6 +59,33 @@ class Api::V1::BrandController < ApplicationController
         success: true,
         data: BrandSerializer.new(brand)
       } , status: 200
+    rescue ActiveRecord::RecordNotFound => e
+      render json: {
+        success: false,
+        errors: e.message 
+      }, status: 404
+    rescue Exception => e
+      render json: {
+        success: false,
+        errors: e.message
+      }, status: 500
+    end
+  end
+
+  def update
+    begin
+      brand = Brand.find(params[:id])
+      if brand.update(brand_params)
+        render json: {
+          success: true,
+          data: BrandSerializer.new(brand)
+        }, status: 202
+      else
+        render json: {
+          success: false,
+          errors: brand.errors
+        }, status: 400
+      end
     rescue ActiveRecord::RecordNotFound => e
       render json: {
         success: false,

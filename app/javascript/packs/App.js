@@ -6,6 +6,7 @@ import LoginForm from "../components/Auth/LoginForm";
 import CategoryForm from "../components/Category/CategoryForm/CategoryForm";
 import CategoryUpdateForm from "../components/Category/CategoryUpdateForm/CategoryUpdateForm";
 import BrandCreateForm from "../components/Brand/BrandCreateForm/BrandCreateForm";
+import BrandUpdateForm from "../components/Brand/BrandUpdateForm/BrandUpdateForm";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
               path="/categories/:categoryId/brands/new"
               component={BrandCreateForm}
             />
+            <Route exact path="/brands/:brandId" component={BrandUpdateForm} />
             <Route path="/login">
               <LoginForm />
             </Route>
