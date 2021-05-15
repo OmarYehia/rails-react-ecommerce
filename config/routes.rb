@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get '/categories/:category_id/brands/', to: 'brand#index'
-      post 'brands/', to: 'brand#create'
+      post '/categories/:category_id/brands/', to: 'brand#create'
       get 'brands/:id', to: 'brand#show'
       delete 'brands/:id', to: 'brand#destroy'
     end

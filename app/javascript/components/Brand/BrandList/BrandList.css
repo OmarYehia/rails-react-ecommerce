@@ -1,6 +1,6 @@
 .brand-container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   align-items: center;
   justify-content: center;
 }
@@ -17,8 +17,17 @@
   z-index: 2;
 }
 
-@media (min-width: 680px) {
+@media (min-width: 680px) and (max-width: 1100px) {
   .brand-container {
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1rem;
+  }
+}
+
+@media (min-width: 1098px) {
+  .brand-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }

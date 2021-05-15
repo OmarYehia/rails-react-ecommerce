@@ -1,6 +1,6 @@
 class Api::V1::BrandController < ApplicationController
   # Skipping token for testing purpose
-  skip_before_action :verify_authenticity_token
+  # skip_before_action :verify_authenticity_token
 
   def index
     begin
