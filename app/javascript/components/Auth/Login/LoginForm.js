@@ -6,7 +6,7 @@ class LoginForm extends React.Component {
     constructor(props) {
         super()
         this.state = {
-            password_digest: "",
+            password: "",
             email: "",
             errors: "",
             redirect: false
@@ -18,7 +18,7 @@ class LoginForm extends React.Component {
     login = () => {
         let user = {
             email: this.state.email,
-            password_digest: this.state.password_digest
+            password: this.state.password
         }
         fetch("/api/v1/login", {
             method: "POST",
@@ -30,10 +30,12 @@ class LoginForm extends React.Component {
             .then(result => {
                 if (!result.error) {
                     console.log(result.token);
+                    document.cookie = `Authorization=Bearer ${result.token}`
                     this.setState({redirect:"/categories"})
                 }
                 else
                     console.log(result.error);
+                    this.setState({errors:result.error})
             }
             )
     }
@@ -42,12 +44,11 @@ class LoginForm extends React.Component {
             return <Redirect to={this.state.redirect}/>
         else {
             return <div>
-
                 <h1>{this.state.errors}</h1>
                 <lable>Email: </lable>
                 <input type="email" name="email" onChange={this.change} />
                 <lable>Password: </lable>
-                <input type="password" name="password_digest" onChange={this.change} />
+                <input type="password" name="password" onChange={this.change} />
                 <button onClick={this.login} >Login</button>
             </div>
         }
