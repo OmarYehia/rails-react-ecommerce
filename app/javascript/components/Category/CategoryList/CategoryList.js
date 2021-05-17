@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import CategoryCard from "../CategoryCard/CategoryCard";
 import "./CategoryList.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-const CategoryList = () => {
+const CategoryList = ({ title, featured }) => {
   const [categories, setCategories] = useState(null);
+  const history = useHistory();
 
   useEffect(() => {
     fetch(`/api/v1/categories`)
@@ -12,8 +13,11 @@ const CategoryList = () => {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
-        setCategories(data.data);
+        let categories = data.data;
+        if (featured) {
+          categories = categories.slice(0, +featured);
+        }
+        setCategories(categories);
       })
       .catch((err) => {
         console.log(err);
@@ -22,19 +26,39 @@ const CategoryList = () => {
 
   return (
     <div>
-      <h1>Categories</h1>
-      <div className="category-container">
-        {categories &&
-          categories.map((category) => (
-            <Link
-              className="card-cont"
-              to={`/categories/${category.id}/brands`}
-              key={category.id}
-            >
-              <CategoryCard category={category} />
+      {!featured && (
+        <div className="d-flex">
+          <Link
+            className="ms-auto btn btn-primary btn-sm"
+            // onClick={history.goBack}
+            to="/"
+          >
+            Homepage
+          </Link>
+        </div>
+      )}
+      <fieldset className="border p-2 shadow-sm">
+        <legend>{title}</legend>
+        <div className="category-container">
+          {categories &&
+            categories.map((category) => (
+              <Link
+                className="card-cont"
+                to={`/categories/${category.id}/brands`}
+                key={category.id}
+              >
+                <CategoryCard category={category} />
+              </Link>
+            ))}
+        </div>
+        {featured && (
+          <div className="d-flex">
+            <Link className="ms-auto" to="/categories">
+              More ...
             </Link>
-          ))}
-      </div>
+          </div>
+        )}
+      </fieldset>
     </div>
   );
 };

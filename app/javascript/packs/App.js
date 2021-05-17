@@ -8,6 +8,7 @@ import CategoryForm from "../components/Category/CategoryForm/CategoryForm";
 import CategoryUpdateForm from "../components/Category/CategoryUpdateForm/CategoryUpdateForm";
 import BrandCreateForm from "../components/Brand/BrandCreateForm/BrandCreateForm";
 import BrandUpdateForm from "../components/Brand/BrandUpdateForm/BrandUpdateForm";
+import LandingPage from "../components/LandingPage/LandingPage";
 
 function App() {
   return (
@@ -17,9 +18,11 @@ function App() {
         <div className="content container">
           <Switch>
             <Route exact path="/">
-              {/* <Home /> */}
+              <LandingPage />
             </Route>
-            <Route exact path="/categories" component={CategoryList} />
+            <Route exact path="/categories">
+              <CategoryList title="Categories" />
+            </Route>
             <Route
               exact
               path="/categories/:categoryId/brands"
