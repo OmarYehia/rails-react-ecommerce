@@ -1,7 +1,7 @@
 require 'bcrypt'
 class Api::V1::UsersController < ApplicationController
     include BCrypt
-    # before_action :authorized, only: [:auto_login]
+    before_action :authorized, only: [:auto_login]
 
   # REGISTER
   def create

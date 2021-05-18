@@ -15,6 +15,23 @@ class LoginForm extends React.Component {
     change = (e) => {
         this.setState({ [e.target.name]: e.target.value })
     }
+
+    getCookie = (cname) => {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
     login = () => {
         let user = {
             email: this.state.email,
@@ -28,20 +45,21 @@ class LoginForm extends React.Component {
             body: JSON.stringify(user)
         }).then(response => response.json())
             .then(result => {
+                console.log(this.getCookie("Authorization"))
                 if (!result.error) {
                     console.log(result.token);
-                    document.cookie = `Authorization=Bearer ${result.token}`
-                    this.setState({redirect:"/categories"})
+                    document.cookie = `Authorization=${result.token}`
+                    this.setState({ redirect: "/" })
                 }
                 else
                     console.log(result.error);
-                    this.setState({errors:result.error})
+                this.setState({ errors: result.error })
             }
             )
     }
     render() {
         if (this.state.redirect)
-            return <Redirect to={this.state.redirect}/>
+            return <Redirect to={this.state.redirect} />
         else {
             return <div>
                 <h1>{this.state.errors}</h1>
