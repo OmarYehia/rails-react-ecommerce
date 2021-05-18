@@ -5,13 +5,15 @@ class Api::V1::UsersController < ApplicationController
 
   # REGISTER
   def create
+    # Tests if the username or the email already exist
     @test1 = User.find_by(username: params[:username])
     @test2 = User.find_by(email: params[:email])
     
     if !@test1 && !@test2 
+      # Tests the password's length
       @test3 = params[:password] ? params[:password].length>6 : ""
 
-      # User passes validations
+      # User passes implemented validations
       @user = User.new(user_params)
       if @user.valid? && user_params["password"] == user_params["password_confirmation"] && @test3
         @user.save
@@ -22,7 +24,7 @@ class Api::V1::UsersController < ApplicationController
           token: token}, 
           status:201
       else
-        !@test3 ? @user.errors.messages["Password length"] = "Password must be greater than 6 characters": nil
+        !@test3 ? @user.errors.messages["Password length"] = "Password length must be greater than 6 characters": nil
         render json: {
           success: false, 
           error: @user.errors,
