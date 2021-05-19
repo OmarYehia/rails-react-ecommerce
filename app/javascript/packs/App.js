@@ -9,12 +9,13 @@ import CategoryUpdateForm from "../components/Category/CategoryUpdateForm/Catego
 import BrandCreateForm from "../components/Brand/BrandCreateForm/BrandCreateForm";
 import BrandUpdateForm from "../components/Brand/BrandUpdateForm/BrandUpdateForm";
 import LandingPage from "../components/LandingPage/LandingPage";
+import Navbar from "../components/Navbar/Navbar";
 
 function App() {
   return (
     <Router>
       <div className="App">
-        {/* <Navbar /> */}
+        <Navbar />
         <div className="content container">
           <Switch>
             <Route exact path="/">
