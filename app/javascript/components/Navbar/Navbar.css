@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap");
+
+.navbar-container {
+  border-bottom: rgba(180, 178, 178, 0.486) 1px solid;
+}
+
+.logo {
+  margin-left: 20px;
+}
+
+.logo span {
+  font-size: 2.5rem;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
+  color: #333;
+  margin-left: 2px;
+}
+
+.navbar-links {
+  margin: 0 auto;
+}
+
+.navbar-links a {
+  text-transform: uppercase;
+}
+
+.navbar-items {
+  margin-left: auto;
+  margin-right: 40px;
+}
+
+.navbar-links a,
+.navbar-items a i {
+  text-decoration: none;
+  font-size: 1.2rem;
+  margin: 0 15px;
+  color: #333;
+  transition: 0.2s ease-in;
+}
+
+.navbar-links a:hover {
+  font-size: 1.3rem;
+  color: rgba(51, 51, 51, 0.349);
+}
+
+.navbar-items a i:hover {
+  color: rgba(51, 51, 51, 0.349);
+}
+
+.loginBtn:hover {
+  background-color: rgba(141, 141, 141, 0.842);
+  border-color: rgba(141, 141, 141, 0.842);
+}
