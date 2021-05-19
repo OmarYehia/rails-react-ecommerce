@@ -66,13 +66,13 @@ class LoginForm extends React.Component {
                 )}</div>
                 <h1>{this.state.error}</h1>
                 <lable>Username: </lable>
-                <input type="text" name="username" onChange={this.change} />
+                <input type="text" name="username" placeholder="Username" onChange={this.change} />
                 <lable>Email: </lable>
-                <input type="email" name="email" onChange={this.change} />
+                <input type="email" name="email" placeholder="Example@example.com" onChange={this.change} />
                 <lable>Password: </lable>
-                <input type="password" name="password" onChange={this.change} />
+                <input type="password" name="password" placeholder="Password" onChange={this.change} />
                 <lable>Password Confirmation: </lable>
-                <input type="password" name="password_confirmation" onChange={this.change} />
+                <input type="password" name="password_confirmation" placeholder="Password" onChange={this.change} />
                 <button onClick={this.login} >Login</button>
             </div>
         }

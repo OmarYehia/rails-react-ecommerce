@@ -64,9 +64,9 @@ class LoginForm extends React.Component {
             return <div>
                 <h1>{this.state.errors}</h1>
                 <lable>Email: </lable>
-                <input type="email" name="email" onChange={this.change} />
+                <input type="email" name="email" placeholder="Example@example.com" onChange={this.change} />
                 <lable>Password: </lable>
-                <input type="password" name="password" onChange={this.change} />
+                <input type="password" name="password" placeholder="Enter password" onChange={this.change} />
                 <button onClick={this.login} >Login</button>
             </div>
         }
