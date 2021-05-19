@@ -33,7 +33,6 @@ class LoginForm extends React.Component {
             body: JSON.stringify(user)
         }).then(response => response.json())
             .then(result => {
-
                 if (!result.error) {
                     console.log(result.token);
                     this.setState({ redirect: "/login" })

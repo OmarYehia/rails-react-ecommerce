@@ -11,48 +11,91 @@ import BrandUpdateForm from "../components/Brand/BrandUpdateForm/BrandUpdateForm
 import LandingPage from "../components/LandingPage/LandingPage";
 import Navbar from "../components/Navbar/Navbar";
 
-function App() {
-  return (
-    <Router>
-      <div className="App">
-        <Navbar />
-        <div className="content container">
-          <Switch>
-            <Route exact path="/">
-              <LandingPage />
-            </Route>
-            <Route exact path="/categories">
-              <CategoryList title="Categories" />
-            </Route>
-            <Route
-              exact
-              path="/categories/:categoryId/brands"
-              component={BrandList}
-            />
-            <Route exact path="/categories/new" component={CategoryForm} />
-            <Route
-              exact
-              path="/categories/:categoryId/update"
-              component={CategoryUpdateForm}
-            />
-            <Route
-              exact
-              path="/categories/:categoryId/brands/new"
-              component={BrandCreateForm}
-            />
-            <Route exact path="/brands/:brandId" component={BrandUpdateForm} />
-            <Route path="/login">
-              <LoginForm />
-            </Route>
-            <Route path="/signup">
-              <SignUpForm />
-            </Route>
-            {/* <Route path="*"><NotFound /></Route> */}
-          </Switch>
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      user: null
+    }
+  }
+
+  updateUser= (returnedUser)=>{
+    this.setState({user:returnedUser})
+  }
+
+  getCookie = (cname) => {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  };
+
+  componentDidMount() {
+    if (!this.getCookie("Authorization") === "") {
+      fetch("/api/v1/auto_login",{
+        headers:{
+          'Authorization':`Bearer ${this.getCookie("Authorization")}`
+        }
+      })
+      .then(response => response.json())
+      .then(result => {
+        console.log(result.user); 
+        this.setState({user: result.user})
+      })
+    }
+  }
+  render() {
+    return (
+      <Router>
+        <div className="App">
+          <Navbar user={this.state.user} />
+          <div className="content container">
+            <Switch>
+              <Route exact path="/">
+                <LandingPage />
+              </Route>
+              <Route exact path="/categories">
+                <CategoryList title="Categories" />
+              </Route>
+              <Route
+                exact
+                path="/categories/:categoryId/brands"
+                component={BrandList}
+              />
+              <Route exact path="/categories/new" component={CategoryForm} />
+              <Route
+                exact
+                path="/categories/:categoryId/update"
+                component={CategoryUpdateForm}
+              />
+              <Route
+                exact
+                path="/categories/:categoryId/brands/new"
+                component={BrandCreateForm}
+              />
+              <Route exact path="/brands/:brandId" component={BrandUpdateForm} />
+              <Route path="/login">
+                <LoginForm setUser={this.updateUser} />
+              </Route>
+              <Route path="/signup">
+                <SignUpForm />
+              </Route>
+              {/* <Route path="*"><NotFound /></Route> */}
+            </Switch>
+          </div>
         </div>
-      </div>
-    </Router>
-  );
+      </Router>
+    );
+  }
 }
 
 export default App;
