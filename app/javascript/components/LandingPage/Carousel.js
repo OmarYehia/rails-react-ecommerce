@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Carousel = () => {
   const settings = {
-    arrowsBlock: true,
+    arrowsBlock: false,
     autoplay: true,
     autoplaySpeed: 6000,
     duration: 100,
@@ -14,7 +14,7 @@ const Carousel = () => {
     <div className="carousel-container">
       <Slider {...settings} className="carousel">
         <div className="row m-0">
-          <div className="col-7 m-0 d-flex flex-column align-items-center justify-content-center">
+          <div className="col-7 m-0 d-flex flex-column align-items-start justify-content-center p-3">
             <h2>Browse Categories</h2>
             <p>Get your best deal today ... </p>
             <Link to="/categories" className="btn btn-primary btn-large">
@@ -30,7 +30,7 @@ const Carousel = () => {
           </div>
         </div>
         <div className="row m-0">
-          <div className="col-7 d-flex flex-column align-items-center justify-content-center">
+          <div className="col-7 d-flex flex-column align-items-start justify-content-center p-3">
             <h2>Browse Categories</h2>
             <p>Get your best deal today ... </p>
             <Link to="/categories" className="btn btn-primary btn-large">
