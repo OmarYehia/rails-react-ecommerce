@@ -21,13 +21,14 @@ class App extends React.Component {
   }
 
   logout = () => {
-    document.cookie = "Authorization= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
-    this.setState({ user: null })
-  }
+    document.cookie =
+      "Authorization= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    this.setState({ user: null });
+  };
 
   updateUser = (returnedUser) => {
-    this.setState({ user: returnedUser })
-  }
+    this.setState({ user: returnedUser });
+  };
 
   getCookie = (cname) => {
     console.log("inside");
@@ -47,19 +48,17 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    if (this.getCookie("Authorization") === "") {
-      console.log("Empty");
-    } else {
+    if (this.getCookie("Authorization") !== "") {
       fetch("/api/v1/auto_login", {
         headers: {
-          'Authorization': `Bearer ${this.getCookie("Authorization")}`
-        }
+          Authorization: `Bearer ${this.getCookie("Authorization")}`,
+        },
       })
-        .then(response => response.json())
-        .then(result => {
+        .then((response) => response.json())
+        .then((result) => {
           console.log(result.user);
-          this.setState({ user: result.user })
-        })
+          this.setState({ user: result.user });
+        });
     }
   }
   render() {
