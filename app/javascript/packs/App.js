@@ -10,18 +10,19 @@ import BrandCreateForm from "../components/Brand/BrandCreateForm/BrandCreateForm
 import BrandUpdateForm from "../components/Brand/BrandUpdateForm/BrandUpdateForm";
 import LandingPage from "../components/LandingPage/LandingPage";
 import Navbar from "../components/Navbar/Navbar";
+import NotFound from "../components/NotFound/NotFound";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      user: null
-    }
+      user: null,
+    };
   }
 
-  updateUser= (returnedUser)=>{
-    this.setState({user:returnedUser})
-  }
+  updateUser = (returnedUser) => {
+    this.setState({ user: returnedUser });
+  };
 
   getCookie = (cname) => {
     let name = cname + "=";
@@ -41,16 +42,16 @@ class App extends React.Component {
 
   componentDidMount() {
     if (!this.getCookie("Authorization") === "") {
-      fetch("/api/v1/auto_login",{
-        headers:{
-          'Authorization':`Bearer ${this.getCookie("Authorization")}`
-        }
+      fetch("/api/v1/auto_login", {
+        headers: {
+          Authorization: `Bearer ${this.getCookie("Authorization")}`,
+        },
       })
-      .then(response => response.json())
-      .then(result => {
-        console.log(result.user); 
-        this.setState({user: result.user})
-      })
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(result.user);
+          this.setState({ user: result.user });
+        });
     }
   }
   render() {
@@ -82,14 +83,20 @@ class App extends React.Component {
                 path="/categories/:categoryId/brands/new"
                 component={BrandCreateForm}
               />
-              <Route exact path="/brands/:brandId" component={BrandUpdateForm} />
+              <Route
+                exact
+                path="/brands/:brandId"
+                component={BrandUpdateForm}
+              />
               <Route path="/login">
                 <LoginForm setUser={this.updateUser} />
               </Route>
               <Route path="/signup">
                 <SignUpForm />
               </Route>
-              {/* <Route path="*"><NotFound /></Route> */}
+              <Route path="*">
+                <NotFound />
+              </Route>
             </Switch>
           </div>
         </div>

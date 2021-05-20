@@ -2,7 +2,7 @@ import React from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 
-const Navbar = ({user}) => {
+const Navbar = ({ user }) => {
   return (
     <div className="navbar-container shadow-sm px-3 py-1 d-flex align-items-center">
       <Link to="/" style={{ textDecoration: "none" }}>
@@ -19,7 +19,6 @@ const Navbar = ({user}) => {
         <Link to="/categories">Categories</Link>
         <Link to="#">Brands</Link>
         <Link to="#">About us</Link>
-        <Link to="#">Contact us</Link>
       </div>
       {!user && (
         <div className="navbar-items">
