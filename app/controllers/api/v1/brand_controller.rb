@@ -1,6 +1,8 @@
 class Api::V1::BrandController < ApplicationController
   # Skipping token for testing purpose
-  skip_before_action :verify_authenticity_token
+  # skip_before_action :verify_authenticity_token
+  before_action :authorized, only: [:create, :update, :delete]
+
 
   def index
     begin
