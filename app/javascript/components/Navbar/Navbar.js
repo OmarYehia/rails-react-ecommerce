@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = ({user, logout}) => {
   return (
-    <div className="navbar-container shadow-sm px-3 py-1 d-flex align-items-center">
+    <div className="navbar-container shadow-sm px-3 py-1 d-flex align-items-center justify-content-between">
       <Link to="/" style={{ textDecoration: "none" }}>
         <div className="logo">
           <span>e</span>
@@ -17,9 +17,7 @@ const Navbar = ({user, logout}) => {
       </Link>
       <div className="navbar-links">
         <Link to="/categories">Categories</Link>
-        <Link to="#">Brands</Link>
         <Link to="#">About us</Link>
-        <Link to="#">Contact us</Link>
       </div>
       {!user && (
         <div className="navbar-items">

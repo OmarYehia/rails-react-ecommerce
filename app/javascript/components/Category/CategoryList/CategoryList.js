@@ -29,7 +29,7 @@ const CategoryList = ({ title, featured }) => {
       {!featured && (
         <div className="d-flex">
           <Link
-            className="ms-auto btn btn-primary btn-sm"
+            className="ms-auto btn btn-primary btn-sm mt-5"
             // onClick={history.goBack}
             to="/"
           >

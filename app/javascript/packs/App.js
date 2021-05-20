@@ -10,13 +10,14 @@ import BrandCreateForm from "../components/Brand/BrandCreateForm/BrandCreateForm
 import BrandUpdateForm from "../components/Brand/BrandUpdateForm/BrandUpdateForm";
 import LandingPage from "../components/LandingPage/LandingPage";
 import Navbar from "../components/Navbar/Navbar";
+import NotFound from "../components/NotFound/NotFound";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      user: null
-    }
+      user: null,
+    };
   }
 
   logout = () => {
@@ -90,14 +91,20 @@ class App extends React.Component {
                 path="/categories/:categoryId/brands/new"
                 component={BrandCreateForm}
               />
-              <Route exact path="/brands/:brandId" component={BrandUpdateForm} />
+              <Route
+                exact
+                path="/brands/:brandId"
+                component={BrandUpdateForm}
+              />
               <Route path="/login">
                 <LoginForm setUser={this.updateUser} />
               </Route>
               <Route path="/signup">
                 <SignUpForm />
               </Route>
-              {/* <Route path="*"><NotFound /></Route> */}
+              <Route path="*">
+                <NotFound />
+              </Route>
             </Switch>
           </div>
         </div>

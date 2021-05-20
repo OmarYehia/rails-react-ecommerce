@@ -1,7 +1,7 @@
 class Api::V1::CategoryController < ApplicationController
   # Skipping token for testing purpose
   # skip_before_action :verify_authenticity_token
-  # before_action :authorized, only: [:create, :update, :delete]
+  before_action :authorized, only: [:create, :update, :delete]
 
   
   def index
