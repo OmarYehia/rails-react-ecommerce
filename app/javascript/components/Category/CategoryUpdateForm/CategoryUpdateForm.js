@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./CategoryUpdateForm.css";
 import { Link, useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const CategoryUpdateForm = () => {
   const { categoryId } = useParams();
@@ -12,6 +13,8 @@ const CategoryUpdateForm = () => {
   const [category, setCategory] = useState(null);
   const [isCategoryFound, setIsCategoryFound] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [cookies, setCookies] = useCookies();
+  const [authorizationError, setAuthorizationError] = useState(null);
 
   useEffect(() => {
     fetch(`/api/v1/categories/${categoryId}`)
@@ -67,11 +70,18 @@ const CategoryUpdateForm = () => {
         body: formData,
         headers: {
           "X-CSRF-TOKEN": document.querySelector('[name="csrf-token"]').content,
+          Authorization: `Bearer ${cookies.Authorization}`,
         },
       })
         .then((res) => {
           setIsPending(false);
-          return res.json();
+          if (res.ok) {
+            return res.json();
+          } else {
+            if (res.status === 401) {
+              throw new Error("Unauthorized");
+            }
+          }
         })
         .then((data) => {
           if (!data.success) {
@@ -102,12 +112,13 @@ const CategoryUpdateForm = () => {
         })
         .catch((err) => {
           console.log(err);
+          setAuthorizationError(true);
         });
     }
   };
 
   return (
-    <div className="d-flex justify-content-center">
+    <div className="d-flex justify-content-center align-items-center mt-5 flex-column">
       {isLoading && (
         <div
           className="spinner-border"
@@ -120,6 +131,13 @@ const CategoryUpdateForm = () => {
       {!isCategoryFound && (
         <div className="d-flex flex-column align-items-center">
           <h1>Sorry, no matching categories found!</h1>
+        </div>
+      )}
+      {authorizationError && (
+        <div className="alert alert-danger mb-3 text-center" role="alert">
+          You are not authorized to do this action!
+          <br />
+          Please contact an administrator if you believe this is a mistake.
         </div>
       )}
       {category && (
