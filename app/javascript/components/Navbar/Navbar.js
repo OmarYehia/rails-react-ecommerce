@@ -2,7 +2,7 @@ import React from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 
-const Navbar = ({user}) => {
+const Navbar = ({user, logout}) => {
   return (
     <div className="navbar-container shadow-sm px-3 py-1 d-flex align-items-center">
       <Link to="/" style={{ textDecoration: "none" }}>
@@ -36,6 +36,9 @@ const Navbar = ({user}) => {
           </Link>
           <Link to="#">
             <i className="fas fa-shopping-cart"></i>
+          </Link>
+          <Link to="#" className="btn btn-sm btn-dark loginBtn" onClick={logout}>
+            Logout
           </Link>
         </div>
       )}

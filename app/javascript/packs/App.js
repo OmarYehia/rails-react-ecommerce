@@ -19,11 +19,17 @@ class App extends React.Component {
     }
   }
 
-  updateUser= (returnedUser)=>{
-    this.setState({user:returnedUser})
+  logout = () => {
+    document.cookie = "Authorization= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+    this.setState({ user: null })
+  }
+
+  updateUser = (returnedUser) => {
+    this.setState({ user: returnedUser })
   }
 
   getCookie = (cname) => {
+    console.log("inside");
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
     let ca = decodedCookie.split(";");
@@ -40,24 +46,26 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    if (!this.getCookie("Authorization") === "") {
-      fetch("/api/v1/auto_login",{
-        headers:{
-          'Authorization':`Bearer ${this.getCookie("Authorization")}`
+    if (this.getCookie("Authorization") === "") {
+      console.log("Empty");
+    } else {
+      fetch("/api/v1/auto_login", {
+        headers: {
+          'Authorization': `Bearer ${this.getCookie("Authorization")}`
         }
       })
-      .then(response => response.json())
-      .then(result => {
-        console.log(result.user); 
-        this.setState({user: result.user})
-      })
+        .then(response => response.json())
+        .then(result => {
+          console.log(result.user);
+          this.setState({ user: result.user })
+        })
     }
   }
   render() {
     return (
       <Router>
         <div className="App">
-          <Navbar user={this.state.user} />
+          <Navbar user={this.state.user} logout={this.logout} />
           <div className="content container">
             <Switch>
               <Route exact path="/">
