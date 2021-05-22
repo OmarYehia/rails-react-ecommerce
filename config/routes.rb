@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/stores', to: "store#index"
       post '/stores/', to: "store#create"
-      get 'store/show'
+      get '/stores/:id', to: "store#show"
       get 'store/destroy'
     end
   end

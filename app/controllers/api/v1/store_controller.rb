@@ -43,6 +43,23 @@ class Api::V1::StoreController < ApplicationController
   end
 
   def show
+    begin
+      store = Store.find(params[:id])
+      render json: {
+        success: true,
+        data: StoreSerializer.new(store)
+      } , status: 200
+    rescue ActiveRecord::RecordNotFound => e
+      render json: {
+        success: false,
+        errors: e.message 
+      }, status: 404
+    rescue Exception => e
+      render json: {
+        success: false,
+        errors: e.message
+      }, status: 500
+    end
   end
 
   def destroy
