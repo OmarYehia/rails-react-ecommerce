@@ -5,6 +5,7 @@ import CategoryList from "../components/Category/CategoryList/CategoryList";
 import LoginForm from "../components/Auth/Login/LoginForm";
 import SignUpForm from "../components/Auth/SignUp/SignUpForm";
 import Profile from "../components/Auth/Profile/Profile";
+import AdminProfile from "../components/Auth/Profile/AdminProfile";
 import CategoryForm from "../components/Category/CategoryForm/CategoryForm";
 import CategoryUpdateForm from "../components/Category/CategoryUpdateForm/CategoryUpdateForm";
 import BrandCreateForm from "../components/Brand/BrandCreateForm/BrandCreateForm";
@@ -105,7 +106,7 @@ class App extends React.Component {
                 <SignUpForm />
               </Route>
               <Route path="/profile">
-                <Profile user={this.state.user} setUser={this.updateUser} getCookie={this.getCookie} />
+                {JSON.parse(localStorage.getItem('user')) ? (JSON.parse(localStorage.getItem('user')).is_admin ? <AdminProfile user={this.state.user} setUser={this.updateUser} getCookie={this.getCookie} /> : <Profile user={this.state.user} setUser={this.updateUser} getCookie={this.getCookie} />) : <Profile user={this.state.user} setUser={this.updateUser} getCookie={this.getCookie} />}
               </Route>
               <Route path="/cart">
                 <CartList />
