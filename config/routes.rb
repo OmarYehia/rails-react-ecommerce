@@ -12,8 +12,10 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
         resource :users, only: [:create]
-        post "login", to: "users#login"
+        post "users/sellers", to: "users#add_seller"
+        get "users", to: "users#index"
         get "auto_login", to: "users#auto_login"
+        post "login", to: "users#login"
         get "users/:id", to: "users#show"
         put "users/edit/:id", to: "users#update"
     end
