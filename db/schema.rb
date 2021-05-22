@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_13_212555) do
+ActiveRecord::Schema.define(version: 2021_05_21_171856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,8 @@ ActiveRecord::Schema.define(version: 2021_05_13_212555) do
     t.string "email", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_admin", default: false
+    t.string "role", default: "buyer"
     t.index ["email"], name: "unique_email", unique: true
     t.index ["email"], name: "uniquectm_const", unique: true
     t.index ["username"], name: "username_unique", unique: true

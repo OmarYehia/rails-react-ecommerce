@@ -22,7 +22,7 @@ category4.image.attach(io: File.open('app/assets/images/mobiles.jpg'), filename:
 category5.image.attach(io: File.open('app/assets/images/tv.jpg'), filename: 'tv.jpg')
 category6.image.attach(io: File.open('app/assets/images/toys.jpg'), filename: 'toys.jpg')
 
-
+p "Created categories"
 
 category1.save()
 category2.save()

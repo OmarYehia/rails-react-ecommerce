@@ -4,6 +4,7 @@ import BrandList from "../components/Brand/BrandList/BrandList";
 import CategoryList from "../components/Category/CategoryList/CategoryList";
 import LoginForm from "../components/Auth/Login/LoginForm";
 import SignUpForm from "../components/Auth/SignUp/SignUpForm";
+import Profile from "../components/Auth/Profile/Profile";
 import CategoryForm from "../components/Category/CategoryForm/CategoryForm";
 import CategoryUpdateForm from "../components/Category/CategoryUpdateForm/CategoryUpdateForm";
 import BrandCreateForm from "../components/Brand/BrandCreateForm/BrandCreateForm";
@@ -22,10 +23,12 @@ class App extends React.Component {
 
   logout = () => {
     document.cookie = "Authorization= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+    window.localStorage.clear();
     this.setState({ user: null })
   }
 
   updateUser = (returnedUser) => {
+    localStorage.setItem('user', JSON.stringify(returnedUser))
     this.setState({ user: returnedUser })
   }
 
@@ -101,6 +104,9 @@ class App extends React.Component {
               </Route>
               <Route path="/signup">
                 <SignUpForm />
+              </Route>
+              <Route path="/profile">
+                <Profile user={this.state.user} setUser={this.updateUser} getCookie={this.getCookie} />
               </Route>
               <Route path="*">
                 <NotFound />

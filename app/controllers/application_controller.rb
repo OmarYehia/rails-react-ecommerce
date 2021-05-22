@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
   # before_action :authorized
 
-
   def encode_token(payload)
     JWT.encode(payload, 'secret')
   end

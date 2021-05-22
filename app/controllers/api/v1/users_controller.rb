@@ -61,6 +61,7 @@ class Api::V1::UsersController < ApplicationController
     @user = User.find_by(email: params[:email])
     if @user && BCrypt::Password.new(@user.password_digest) == params[:password]
       token = encode_token({user_id: @user.id})
+      session[:user_id] = @user.id
       render json: {
         success: true, 
         data: UserSerializer.new(@user), 
@@ -69,8 +70,51 @@ class Api::V1::UsersController < ApplicationController
     else
       render json: {
         success: false,
-        error: "Invalid Username or Password"},
+        error: "Invalid Username or Password"
+      },
         status: 400
+    end
+  end
+
+  def show
+    @user = User.find_by(id:params[:id])
+    if @user.present?
+      render json: {
+        success: true,
+        data: UserSerializer.new(@user),
+      },
+      status: 200
+    else
+      render json: {
+        success: false,
+        error: "User not found"
+      },
+      status: 400
+    end
+  end 
+
+  def update
+    @user=User.find_by(id:params[:id])
+    if @user.present?
+      if @user.update(:skip_password_confirmation=> true, username: params[:username], email:params[:email])
+        render json: {
+          success: true,
+          data: UserSerializer.new(@user)
+        },
+        status: 200
+      else
+        render json: {
+          success: false,
+          error: "Couldnt update user"
+        },
+        status: 400
+      end
+    else
+      render json: {
+        success: false,
+        error: "User not found"
+      },
+      status: 400
     end
   end
 
