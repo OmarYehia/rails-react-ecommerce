@@ -5,7 +5,7 @@ class Api::V1::CategoryController < ApplicationController
 
   
   def index
-    categories = Category.all
+    categories = Category.all.order(:created_at)
     render json: {
       success: true,
       totalRecords: categories.length,

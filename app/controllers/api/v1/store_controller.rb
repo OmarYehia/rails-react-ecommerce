@@ -4,7 +4,7 @@ class Api::V1::StoreController < ApplicationController
   # before_action :authorized, only: [:create, :update, :delete]
 
   def index
-    stores = Store.all
+    stores = Store.all.order(:created_at)
     render json: {
       success: true,
       totalRecords: stores.length,
@@ -49,6 +49,33 @@ class Api::V1::StoreController < ApplicationController
         success: true,
         data: StoreSerializer.new(store)
       } , status: 200
+    rescue ActiveRecord::RecordNotFound => e
+      render json: {
+        success: false,
+        errors: e.message 
+      }, status: 404
+    rescue Exception => e
+      render json: {
+        success: false,
+        errors: e.message
+      }, status: 500
+    end
+  end
+
+  def update
+    begin
+      store = Store.find(params[:id])
+      if store.update(store_params)
+        render json: {
+          success: true,
+          data: StoreSerializer.new(store)
+        }, status: 202
+      else
+        render json: {
+          success: false,
+          errors: store.errors
+        }, status: 400
+      end
     rescue ActiveRecord::RecordNotFound => e
       render json: {
         success: false,

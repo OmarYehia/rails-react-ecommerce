@@ -7,7 +7,7 @@ class Api::V1::BrandController < ApplicationController
   def index
     begin
       category = Category.find(params[:category_id])
-      brands = category.brands
+      brands = category.brands.order(:created_at)
       render json: {
         success: true,
         totalRecords: brands.length,
