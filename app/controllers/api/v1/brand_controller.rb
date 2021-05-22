@@ -1,11 +1,13 @@
 class Api::V1::BrandController < ApplicationController
   # Skipping token for testing purpose
-  skip_before_action :verify_authenticity_token
+  # skip_before_action :verify_authenticity_token
+  before_action :authorized, only: [:create, :update, :delete]
+
 
   def index
     begin
       category = Category.find(params[:category_id])
-      brands = category.brands
+      brands = category.brands.order(:created_at)
       render json: {
         success: true,
         totalRecords: brands.length,

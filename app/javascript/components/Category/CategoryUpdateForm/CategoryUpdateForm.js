@@ -108,6 +108,7 @@ const CategoryUpdateForm = () => {
               .classList.remove("is-invalid");
             setNameError("");
             setImageError("");
+            setAuthorizationError(false);
           }
         })
         .catch((err) => {

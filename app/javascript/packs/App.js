@@ -12,6 +12,7 @@ import BrandUpdateForm from "../components/Brand/BrandUpdateForm/BrandUpdateForm
 import LandingPage from "../components/LandingPage/LandingPage";
 import Navbar from "../components/Navbar/Navbar";
 import NotFound from "../components/NotFound/NotFound";
+import CartList from "../components/ShoppingCart/CartList/CartList";
 
 class App extends React.Component {
   constructor() {
@@ -50,19 +51,17 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    if (this.getCookie("Authorization") === "") {
-      console.log("Empty");
-    } else {
+    if (this.getCookie("Authorization") !== "") {
       fetch("/api/v1/auto_login", {
         headers: {
-          'Authorization': `Bearer ${this.getCookie("Authorization")}`
-        }
+          Authorization: `Bearer ${this.getCookie("Authorization")}`,
+        },
       })
-        .then(response => response.json())
-        .then(result => {
+        .then((response) => response.json())
+        .then((result) => {
           console.log(result.user);
-          this.setState({ user: result.user })
-        })
+          this.setState({ user: result.user });
+        });
     }
   }
   render() {
@@ -107,6 +106,9 @@ class App extends React.Component {
               </Route>
               <Route path="/profile">
                 <Profile user={this.state.user} setUser={this.updateUser} getCookie={this.getCookie} />
+              </Route>
+              <Route path="/cart">
+                <CartList />
               </Route>
               <Route path="*">
                 <NotFound />

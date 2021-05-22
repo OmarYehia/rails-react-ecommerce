@@ -2,6 +2,15 @@ Rails.application.routes.draw do
     
   namespace :api do
     namespace :v1 do
+      get '/stores', to: "store#index"
+      post '/stores/', to: "store#create"
+      get '/stores/:id', to: "store#show"
+      delete '/stores/:id', to: "store#destroy"
+      put '/stores/:id', to: "store#update"
+    end
+  end
+  namespace :api do
+    namespace :v1 do
         resource :users, only: [:create]
         post "login", to: "users#login"
         get "auto_login", to: "users#auto_login"
