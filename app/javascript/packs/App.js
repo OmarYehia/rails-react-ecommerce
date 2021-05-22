@@ -11,6 +11,7 @@ import BrandUpdateForm from "../components/Brand/BrandUpdateForm/BrandUpdateForm
 import LandingPage from "../components/LandingPage/LandingPage";
 import Navbar from "../components/Navbar/Navbar";
 import NotFound from "../components/NotFound/NotFound";
+import CartList from "../components/ShoppingCart/CartList/CartList";
 
 class App extends React.Component {
   constructor() {
@@ -100,6 +101,9 @@ class App extends React.Component {
               </Route>
               <Route path="/signup">
                 <SignUpForm />
+              </Route>
+              <Route path="/cart">
+                <CartList />
               </Route>
               <Route path="*">
                 <NotFound />
