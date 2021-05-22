@@ -63,6 +63,23 @@ class Api::V1::StoreController < ApplicationController
   end
 
   def destroy
+    begin
+      store = Store.find(params[:id])
+      store.delete()
+      render json: {
+        success: true,
+      }, status: 202
+    rescue ActiveRecord::RecordNotFound => e
+      render json: {
+        success: false,
+        errors: e.message 
+      }, status: 404
+    rescue Exception => e
+      render json: {
+        success: false,
+        errors: e.message
+      }, status: 500
+    end
   end
 
   private

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       get '/stores', to: "store#index"
       post '/stores/', to: "store#create"
       get '/stores/:id', to: "store#show"
-      get 'store/destroy'
+      delete '/stores/:id', to: "store#destroy"
     end
   end
   namespace :api do
