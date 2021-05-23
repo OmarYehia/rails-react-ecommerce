@@ -137,6 +137,16 @@ class App extends React.Component {
                   />
                 )}
               </Route>
+              <Route path="profile/edit">
+                <div>
+                  <h1>{this.state.errors}</h1>
+                  <span>Username: </span>
+                  <input type="text" name="username" value={this.state.username} onChange={this.change} />
+                  <span>Email: </span>
+                  <input type="email" name="email" value={this.state.email} onChange={this.change} />
+                  <button onClick={this.update}>Update Profile</button>
+                </div>
+              </Route>
               <Route path="/cart">
                 <CartList />
               </Route>
