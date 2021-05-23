@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect, browserHistory, Link } from "react-router-dom";
 import NotFound from "../../NotFound/NotFound"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class AdminProfile extends React.Component {
     constructor(props) {
@@ -54,24 +55,18 @@ class AdminProfile extends React.Component {
         else {
             return (
                 <div>
-                    <h1>{this.state.errors}</h1>
-                    <span>Username: </span>
-                    <input type="text" name="username" value={this.state.username} onChange={this.change} />
-                    <span>Email: </span>
-                    <input type="email" name="email" value={this.state.email} onChange={this.change} />
-                    <button onClick={this.update}>Update Profile</button>
                     <ul className="nav justify-content-center">
                         <li className="nav-item">
-                            <Link className="nav-link active" to="#">Active</Link>
+                            <Link className="nav-link active" to={`profile/edit`}>Edit Profile</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="#">Link</Link>
+                            <Link className="nav-link" to="#">Add Seller</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="#">Link</Link>
+                            <Link className="nav-link" to="#">Add Store</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link disabled" to="#" tabindex="-1" aria-disabled="true">Disabled</Link>
+                            <Link className="nav-link" to="#">View Stats</Link>
                         </li>
                     </ul>
                 </div>

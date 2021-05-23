@@ -131,7 +131,6 @@ class Api::V1::UsersController < ApplicationController
       }, status: 400
     end
   end
-end
 
   def show
     @user = User.find_by(id:params[:id])
@@ -185,3 +184,4 @@ end
   def user_params
     params.permit(:username, :password, :password_confirmation, :email)
   end
+end
