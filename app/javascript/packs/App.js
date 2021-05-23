@@ -15,6 +15,7 @@ import Navbar from "../components/Navbar/Navbar";
 import NotFound from "../components/NotFound/NotFound";
 import CartList from "../components/ShoppingCart/CartList/CartList";
 import StoreForm from "../components/Store/StoreForm/StoreForm";
+import StoreUpdateForm from "../components/Store/StoreUpdateForm/StoreUpdateForm";
 
 class App extends React.Component {
   constructor() {
@@ -102,7 +103,10 @@ class App extends React.Component {
                 component={BrandUpdateForm}
               />
               <Route path="/stores/new">
-                <StoreForm fetchURL="/api/v1/stores" />
+                <StoreForm />
+              </Route>
+              <Route path="/stores/:storeId/update">
+                <StoreUpdateForm />
               </Route>
               <Route path="/login">
                 <LoginForm setUser={this.updateUser} />
