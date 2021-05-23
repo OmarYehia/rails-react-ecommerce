@@ -16,8 +16,8 @@ class Api::V1::StoreController < ApplicationController
   def create
     begin
       store = Store.new(store_params)
-      seller = User.find(params[:sellerId])
-      store.user_id = params[:sellerId]
+      seller = User.find(params[:sellerID])
+      store.user_id = params[:sellerID]
       if store.save()
         render json: {
           success: true,

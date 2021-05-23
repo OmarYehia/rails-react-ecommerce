@@ -78,6 +78,10 @@ class Api::V1::UsersController < ApplicationController
   end
 
 
+  def auto_login
+    render json: @user
+  end
+  
   def index
     users = User.where("role = 'seller'")
     render json: {
@@ -175,9 +179,6 @@ class Api::V1::UsersController < ApplicationController
   end
 
 
-  def auto_login
-    render json: @user
-  end
 
   private
 

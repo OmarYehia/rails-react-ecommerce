@@ -14,6 +14,7 @@ import LandingPage from "../components/LandingPage/LandingPage";
 import Navbar from "../components/Navbar/Navbar";
 import NotFound from "../components/NotFound/NotFound";
 import CartList from "../components/ShoppingCart/CartList/CartList";
+import StoreForm from "../components/Store/StoreForm/StoreForm";
 
 class App extends React.Component {
   constructor() {
@@ -24,15 +25,16 @@ class App extends React.Component {
   }
 
   logout = () => {
-    document.cookie = "Authorization= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+    document.cookie =
+      "Authorization= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
     window.localStorage.clear();
-    this.setState({ user: null })
-  }
+    this.setState({ user: null });
+  };
 
   updateUser = (returnedUser) => {
-    localStorage.setItem('user', JSON.stringify(returnedUser))
-    this.setState({ user: returnedUser })
-  }
+    localStorage.setItem("user", JSON.stringify(returnedUser));
+    this.setState({ user: returnedUser });
+  };
 
   getCookie = (cname) => {
     console.log("inside");
@@ -99,6 +101,9 @@ class App extends React.Component {
                 path="/brands/:brandId"
                 component={BrandUpdateForm}
               />
+              <Route path="/stores/new">
+                <StoreForm fetchURL="/api/v1/stores" />
+              </Route>
               <Route path="/login">
                 <LoginForm setUser={this.updateUser} />
               </Route>
@@ -106,7 +111,27 @@ class App extends React.Component {
                 <SignUpForm />
               </Route>
               <Route path="/profile">
-                {JSON.parse(localStorage.getItem('user')) ? (JSON.parse(localStorage.getItem('user')).is_admin ? <AdminProfile user={this.state.user} setUser={this.updateUser} getCookie={this.getCookie} /> : <Profile user={this.state.user} setUser={this.updateUser} getCookie={this.getCookie} />) : <Profile user={this.state.user} setUser={this.updateUser} getCookie={this.getCookie} />}
+                {JSON.parse(localStorage.getItem("user")) ? (
+                  JSON.parse(localStorage.getItem("user")).is_admin ? (
+                    <AdminProfile
+                      user={this.state.user}
+                      setUser={this.updateUser}
+                      getCookie={this.getCookie}
+                    />
+                  ) : (
+                    <Profile
+                      user={this.state.user}
+                      setUser={this.updateUser}
+                      getCookie={this.getCookie}
+                    />
+                  )
+                ) : (
+                  <Profile
+                    user={this.state.user}
+                    setUser={this.updateUser}
+                    getCookie={this.getCookie}
+                  />
+                )}
               </Route>
               <Route path="profile/edit">
                 <div>
