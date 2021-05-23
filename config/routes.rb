@@ -2,11 +2,11 @@ Rails.application.routes.draw do
     
   namespace :api do
     namespace :v1 do
-      get '/stores', to: "store#index"
-      post '/stores/', to: "store#create"
-      get '/stores/:id', to: "store#show"
-      delete '/stores/:id', to: "store#destroy"
-      put '/stores/:id', to: "store#update"
+      get 'stores/', to: "store#index"
+      post 'stores/', to: "store#create"
+      get 'stores/:id', to: "store#show"
+      delete 'stores/:id', to: "store#destroy"
+      put 'stores/:id', to: "store#update"
     end
   end
   namespace :api do

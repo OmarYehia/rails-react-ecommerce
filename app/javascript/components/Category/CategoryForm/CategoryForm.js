@@ -58,13 +58,10 @@ const CategoryForm = () => {
       })
         .then((res) => {
           setIsPending(false);
-          if (res.ok) {
-            return res.json();
-          } else {
-            if (res.status === 401) {
-              throw new Error("Unauthorized");
-            }
+          if (res.status === 401) {
+            throw new Error("Unauthorized");
           }
+          return res.json();
         })
         .then((data) => {
           if (!data.success) {
@@ -93,10 +90,9 @@ const CategoryForm = () => {
             setImageError("");
             setAuthorizationError(false);
           }
-          console.log(data);
         })
         .catch((err) => {
-          console.log(err);
+          setIsPending(false);
           setAuthorizationError(true);
         });
     }
