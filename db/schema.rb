@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2021_05_23_063751) do
-=======
-ActiveRecord::Schema.define(version: 2021_05_22_121655) do
->>>>>>> c247ff82013b15b03360e2ef8cfbf9554cda1434
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +50,21 @@ ActiveRecord::Schema.define(version: 2021_05_22_121655) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "order_items", force: :cascade do |t|
+    t.string "state"
+    t.float "price"
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "order_id"
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -63,6 +74,8 @@ ActiveRecord::Schema.define(version: 2021_05_22_121655) do
     t.datetime "updated_at", null: false
     t.bigint "brand_id"
     t.index ["brand_id"], name: "index_products_on_brand_id"
+  end
+
   create_table "stores", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "user_id"
@@ -85,9 +98,7 @@ ActiveRecord::Schema.define(version: 2021_05_22_121655) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "brands", "categories"
-<<<<<<< HEAD
+  add_foreign_key "order_items", "orders"
   add_foreign_key "products", "brands"
-=======
   add_foreign_key "stores", "users"
->>>>>>> c247ff82013b15b03360e2ef8cfbf9554cda1434
 end
