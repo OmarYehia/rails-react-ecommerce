@@ -60,6 +60,9 @@ const CategoryList = ({ title, featured }) => {
       <fieldset className="border p-2 shadow-sm">
         <legend>{title}</legend>
         <div className="category-container">
+          {filteredCategories && filteredCategories.length == 0 && (
+            <h2 className="not-found">No categories found</h2>
+          )}
           {filteredCategories &&
             filteredCategories.map((category) => (
               <Link
