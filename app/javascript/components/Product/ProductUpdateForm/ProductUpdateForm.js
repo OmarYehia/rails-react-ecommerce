@@ -10,6 +10,7 @@ const ProductUpdateForm = () => {
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [titleError, setTitleError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
   const [imageError, setImageError] = useState("");
   const [priceError, setPriceError] = useState("");
   const [quantityError, setQuantityError] = useState("");
@@ -22,13 +23,16 @@ const ProductUpdateForm = () => {
   const [authorizationError, setAuthorizationError] = useState(null);
 
   useEffect(() => {
-    fetch(`/api/v1/brands/${brandId}`)
+    fetch(`/api/v1/products/${productId}`)
       .then((res) => {
         return res.json();
       })
       .then((data) => {
         setProduct(data.data.product);
         setTitle(data.data.product.title);
+        setDescription(data.data.product.description);
+        setPrice(data.data.product.price)
+        setQuantity(data.data.product.quantity)
       })
       .catch((err) => {
         setIsProductFound(false);
@@ -68,9 +72,12 @@ const ProductUpdateForm = () => {
       if (imageFile.files[0]) {
         formData.append("image", imageFile.files[0]);
       }
-      formData.append("name", name);
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("price", price);
+      formData.append("quantity", quantity);
 
-      fetch(`/api/v1/brands/${brandId}`, {
+      fetch(`/api/v1/products/${productId}`, {
         method: "PUT",
         body: formData,
         headers: {
@@ -96,15 +103,15 @@ const ProductUpdateForm = () => {
             }
             if (data.errors.description) {
                 document.querySelector("#brandName").classList.add("is-invalid");
-                setTitleError(data.errors.description);
+                setDescriptionError(data.errors.description);
             }
             if (data.errors.price) {
                 document.querySelector("#brandName").classList.add("is-invalid");
-                setTitleError(data.errors.price);
+                setPriceError(data.errors.price);
             }
             if (data.errors.quantity) {
                 document.querySelector("#brandName").classList.add("is-invalid");
-                setTitleError(data.errors.quantity);
+                setQuantityError(data.errors.quantity);
             }
             if (data.errors.image) {
               document.querySelector("#brandImage").classList.add("is-invalid");
@@ -121,6 +128,7 @@ const ProductUpdateForm = () => {
             setTitleError("");
             setDescription("");
             setPriceError("");
+            setQuantityError("");
             setImageError("");
             setAuthorizationError(false);
           }
@@ -207,7 +215,7 @@ const ProductUpdateForm = () => {
               required
               value={description}
               onChange={(e) => {
-                setTitle(e.target.value);
+                setDescription(e.target.value);
               }}
             />
             {titleError && (
@@ -228,7 +236,7 @@ const ProductUpdateForm = () => {
               required
               value={price}
               onChange={(e) => {
-                setTitle(e.target.value);
+                setPrice(e.target.value);
               }}
             />
             {titleError && (
@@ -249,7 +257,7 @@ const ProductUpdateForm = () => {
               required
               value={quantity}
               onChange={(e) => {
-                setTitle(e.target.value);
+                setQuantity(e.target.value);
               }}
             />
             {titleError && (
@@ -281,7 +289,7 @@ const ProductUpdateForm = () => {
               className="btn btn-outline-primary"
               id="submitBtn"
             >
-              Update Brand
+              Update Product
             </button>
           )}
           {isPending && (

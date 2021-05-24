@@ -18,6 +18,7 @@ import StoreForm from "../components/Store/StoreForm/StoreForm";
 import StoreUpdateForm from "../components/Store/StoreUpdateForm/StoreUpdateForm";
 
 import ProductList from '../components/Product/ProductList/ProductList'
+import ProductUpdateForm from "../components/Product/ProductUpdateForm/ProductUpdateForm";
 
 class App extends React.Component {
   constructor() {
@@ -84,6 +85,11 @@ class App extends React.Component {
                 exact
                 path="/categories/:categoryId/:brandName/brands/"
                 component={ProductList}
+              />
+              <Route 
+                exact
+                path="/products/:productId/update"
+                component={ProductUpdateForm}
               />
               <Route exact path="/categories">
                 <CategoryList title="Categories" />
