@@ -19,6 +19,7 @@ import StoreUpdateForm from "../components/Store/StoreUpdateForm/StoreUpdateForm
 
 import ProductList from '../components/Product/ProductList/ProductList'
 import ProductUpdateForm from "../components/Product/ProductUpdateForm/ProductUpdateForm";
+import ProductCreateForm from "../components/Product/ProductCreateForm/ProductCreateForm";
 
 class App extends React.Component {
   constructor() {
@@ -91,6 +92,12 @@ class App extends React.Component {
                 path="/products/:productId/update"
                 component={ProductUpdateForm}
               />
+              <Route 
+                exact
+                path="/brands/:brandId/products/new"
+                component={ProductCreateForm}
+              />
+
               <Route exact path="/categories">
                 <CategoryList title="Categories" />
               </Route>
