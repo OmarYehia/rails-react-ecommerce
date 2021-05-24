@@ -80,6 +80,8 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     erubi (1.10.0)
     execjs (2.8.0)
+    faker (2.18.0)
+      i18n (>= 1.6, < 2)
     ffi (1.15.0)
     ffi (1.15.0-x64-mingw32)
     globalid (0.4.2)
@@ -240,6 +242,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   chromedriver-helper
   cloudinary
+  faker
   jbuilder (~> 2.5)
   jwt
   listen (>= 3.0.5, < 3.2)

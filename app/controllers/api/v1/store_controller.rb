@@ -1,7 +1,8 @@
 class Api::V1::StoreController < ApplicationController
   # Skipping token for testing purpose
-  skip_before_action :verify_authenticity_token
-  # before_action :authorized, only: [:create, :update, :delete]
+  # skip_before_action :verify_authenticity_token
+  before_action :authorized, only: [:create, :update, :delete]
+  before_action :is_admin, only: [:create, :update, :delete]
 
   def index
     stores = Store.all.order(:created_at)
@@ -15,8 +16,8 @@ class Api::V1::StoreController < ApplicationController
   def create
     begin
       store = Store.new(store_params)
-      seller = User.find(params[:sellerId])
-      store.user_id = params[:sellerId]
+      seller = User.find(params[:sellerID])
+      store.user_id = params[:sellerID]
       if store.save()
         render json: {
           success: true,
@@ -65,6 +66,8 @@ class Api::V1::StoreController < ApplicationController
   def update
     begin
       store = Store.find(params[:id])
+      seller = User.find(params[:sellerID])
+      store.user_id = params[:sellerID]
       if store.update(store_params)
         render json: {
           success: true,
