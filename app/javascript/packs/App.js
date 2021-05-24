@@ -17,6 +17,8 @@ import CartList from "../components/ShoppingCart/CartList/CartList";
 import StoreForm from "../components/Store/StoreForm/StoreForm";
 import StoreUpdateForm from "../components/Store/StoreUpdateForm/StoreUpdateForm";
 
+import ProductList from '../components/Product/ProductList/ProductList'
+
 class App extends React.Component {
   constructor() {
     super();
@@ -78,6 +80,11 @@ class App extends React.Component {
               <Route exact path="/">
                 <LandingPage />
               </Route>
+              <Route 
+                exact
+                path="/categories/:categoryId/:brandName/brands/"
+                component={ProductList}
+              />
               <Route exact path="/categories">
                 <CategoryList title="Categories" />
               </Route>

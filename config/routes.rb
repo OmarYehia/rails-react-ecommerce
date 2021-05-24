@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-    
+
   namespace :api do
     namespace :v1 do
       get 'orders/' , to:"order#index"
@@ -29,6 +29,16 @@ Rails.application.routes.draw do
     end
   end
 
+      
+  namespace :api do
+    namespace :v1 do
+      get 'brands/:id/products/' , to: 'product#index'
+      post 'brands/:id/products/' ,to: 'product#create'
+      get 'products/:id' ,to: 'product#show'
+      delete 'products/:id' ,to: 'product#destroy'
+      put 'products/:id' ,to: 'product#update'
+    end
+  end
 
   namespace :api do
     namespace :v1 do
