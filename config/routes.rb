@@ -2,7 +2,7 @@ Rails.application.routes.draw do
     
   namespace :api do
     namespace :v1 do
-      get 'order/index'
+      get 'orders/' , to:"order#index"
       post 'orders/', to:"order#create"
       get 'order/show'
     end
