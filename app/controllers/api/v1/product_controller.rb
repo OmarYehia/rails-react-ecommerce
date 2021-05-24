@@ -1,24 +1,23 @@
-class Api::V1::BrandController < ApplicationController
+class Api::V1::ProductController < ApplicationController
   # Skipping token for testing purpose
   skip_before_action :verify_authenticity_token
   # before_action :authorized, only: [:create, :update, :delete]
-
-
+  
   def index
     begin
-      category = Category.find(params[:category_id])
-      brands = category.brands
+  
+      products = Product.all
       render json: {
         success: true,
-        totalRecords: brands.length,
-        data: (ActiveModel::ArraySerializer.new(brands, each_serializer: BrandSerializer))
+        totalRecords: products.length,
+        data: (ActiveModel::ArraySerializer.new(products, each_serializer: ProductSerializer))
       }, status: 200
     rescue ActiveRecord::RecordNotFound => e
       render json: {
         success: false,
         errors: e.message
       }, status: 404
-    rescue Exception => e
+    rescue  Exception => e
       render json: {
         success: false,
         errors: e.message
@@ -28,74 +27,47 @@ class Api::V1::BrandController < ApplicationController
 
   def create
     begin
-      category = Category.find(params[:category_id])
-      brand = category.brands.new(brand_params)
-      if brand.save()
+      brand = Brand.find(params[:id])
+      product = brand.products.new(product_params)
+      if product.save()
         render json: {
           success: true,
-          data: BrandSerializer.new(brand)
+          data: ProductSerializer.new(product)
         }, status: 201
       else
         render json: {
           success: false,
-          errors: brand.errors
+          errors: product.errors
         }, status: 400
       end
-    rescue ActiveRecord::RecordNotFound => e
-      render json: {
-        success: false,
-        errors: e.message
-      }, status: 404
-    rescue Exception => e
-      render json: {
-        success: false,
-        errors: e.message
-      }, status: 500
-    end
+      rescue ActiveRecord::RecordNotFound => e
+        render json: {
+          success: false,
+          errors: e.message
+        }, status: 404
+      rescue Exception => e
+        render json: {
+          success: false,
+          errors: e.message
+        }, status: 500
+      end
   end
 
   def show
     begin
-      brand = Brand.find(params[:id])
+      product = Product.find(params[:id])
       render json: {
         success: true,
-        data: BrandSerializer.new(brand)
-      } , status: 200
-    rescue ActiveRecord::RecordNotFound => e
-      render json: {
-        success: false,
-        errors: e.message 
-      }, status: 404
-    rescue Exception => e
+        data: ProductSerializer.new(product)
+      }, status: 200
+    rescue ActiveRecord::RecordNotFound => e 
       render json: {
         success: false,
         errors: e.message
-      }, status: 500
-    end
-  end
-
-  def update
-    begin
-      brand = Brand.find(params[:id])
-      if brand.update(brand_params)
-        render json: {
-          success: true,
-          data: BrandSerializer.new(brand)
-        }, status: 202
-      else
-        render json: {
-          success: false,
-          errors: brand.errors
-        }, status: 400
-      end
-    rescue ActiveRecord::RecordNotFound => e
+      } , status: 404
+    rescue Exception => e 
       render json: {
-        success: false,
-        errors: e.message 
-      }, status: 404
-    rescue Exception => e
-      render json: {
-        success: false,
+        success: false, 
         errors: e.message
       }, status: 500
     end
@@ -103,8 +75,8 @@ class Api::V1::BrandController < ApplicationController
 
   def destroy
     begin
-      brand = Brand.find(params[:id])
-      brand.delete()
+      product = Product.find(params[:id])
+      product.delete()
       render json: {
         success: true,
       }, status: 202
@@ -121,8 +93,36 @@ class Api::V1::BrandController < ApplicationController
     end
   end
 
+  def update
+    begin
+      product = Product.find(params[:id])
+      if product.update(product_params)
+        render json: {
+          success: true,
+          data: ProductSerializer.new(product)
+        }, status: 202
+      else
+        render json: {
+          success: false,
+          errors: product.errors
+        }, status: 400
+      end
+    rescue ActiveRecord::RecordNotFound => e
+      render json: {
+        success: false,
+        errors: e.message 
+      }, status: 404
+    rescue Exception => e
+      render json: {
+        success: false,
+        errors: e.message
+      }, status: 500     
+    end
+  end
+
+
   private
-  def brand_params
-    params.permit(:name, :image)
+  def product_params
+    params.permit(:title, :description, :price, :quantity, :image)
   end
 end

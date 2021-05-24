@@ -12,6 +12,8 @@ import LandingPage from "../components/LandingPage/LandingPage";
 import Navbar from "../components/Navbar/Navbar";
 import NotFound from "../components/NotFound/NotFound";
 
+import ProductList from '../components/Product/ProductList/ProductList'
+
 class App extends React.Component {
   constructor() {
     super();
@@ -71,6 +73,11 @@ class App extends React.Component {
               <Route exact path="/">
                 <LandingPage />
               </Route>
+              <Route 
+                exact
+                path="/categories/:categoryId/:brandName/brands/"
+                component={ProductList}
+              />
               <Route exact path="/categories">
                 <CategoryList title="Categories" />
               </Route>
