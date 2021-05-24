@@ -4,6 +4,8 @@ import BrandList from "../components/Brand/BrandList/BrandList";
 import CategoryList from "../components/Category/CategoryList/CategoryList";
 import LoginForm from "../components/Auth/Login/LoginForm";
 import SignUpForm from "../components/Auth/SignUp/SignUpForm";
+import Profile from "../components/Auth/Profile/Profile";
+import AdminProfile from "../components/Auth/Profile/AdminProfile";
 import CategoryForm from "../components/Category/CategoryForm/CategoryForm";
 import CategoryUpdateForm from "../components/Category/CategoryUpdateForm/CategoryUpdateForm";
 import BrandCreateForm from "../components/Brand/BrandCreateForm/BrandCreateForm";
@@ -11,6 +13,9 @@ import BrandUpdateForm from "../components/Brand/BrandUpdateForm/BrandUpdateForm
 import LandingPage from "../components/LandingPage/LandingPage";
 import Navbar from "../components/Navbar/Navbar";
 import NotFound from "../components/NotFound/NotFound";
+import CartList from "../components/ShoppingCart/CartList/CartList";
+import StoreForm from "../components/Store/StoreForm/StoreForm";
+import StoreUpdateForm from "../components/Store/StoreUpdateForm/StoreUpdateForm";
 
 import ProductList from '../components/Product/ProductList/ProductList'
 
@@ -25,10 +30,12 @@ class App extends React.Component {
   logout = () => {
     document.cookie =
       "Authorization= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    window.localStorage.clear();
     this.setState({ user: null });
   };
 
   updateUser = (returnedUser) => {
+    localStorage.setItem("user", JSON.stringify(returnedUser));
     this.setState({ user: returnedUser });
   };
 
@@ -102,11 +109,63 @@ class App extends React.Component {
                 path="/brands/:brandId"
                 component={BrandUpdateForm}
               />
+              <Route path="/stores/new">
+                <StoreForm />
+              </Route>
+              <Route path="/stores/:storeId/update">
+                <StoreUpdateForm />
+              </Route>
               <Route path="/login">
                 <LoginForm setUser={this.updateUser} />
               </Route>
               <Route path="/signup">
                 <SignUpForm />
+              </Route>
+              <Route path="/profile">
+                {JSON.parse(localStorage.getItem("user")) ? (
+                  JSON.parse(localStorage.getItem("user")).is_admin ? (
+                    <AdminProfile
+                      user={this.state.user}
+                      setUser={this.updateUser}
+                      getCookie={this.getCookie}
+                    />
+                  ) : (
+                    <Profile
+                      user={this.state.user}
+                      setUser={this.updateUser}
+                      getCookie={this.getCookie}
+                    />
+                  )
+                ) : (
+                  <Profile
+                    user={this.state.user}
+                    setUser={this.updateUser}
+                    getCookie={this.getCookie}
+                  />
+                )}
+              </Route>
+              <Route path="profile/edit">
+                <div>
+                  <h1>{this.state.errors}</h1>
+                  <span>Username: </span>
+                  <input
+                    type="text"
+                    name="username"
+                    value={this.state.username}
+                    onChange={this.change}
+                  />
+                  <span>Email: </span>
+                  <input
+                    type="email"
+                    name="email"
+                    value={this.state.email}
+                    onChange={this.change}
+                  />
+                  <button onClick={this.update}>Update Profile</button>
+                </div>
+              </Route>
+              <Route path="/cart">
+                <CartList />
               </Route>
               <Route path="*">
                 <NotFound />

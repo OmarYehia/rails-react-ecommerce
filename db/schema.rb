@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2021_05_23_063751) do
+=======
+ActiveRecord::Schema.define(version: 2021_05_22_121655) do
+>>>>>>> c247ff82013b15b03360e2ef8cfbf9554cda1434
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +63,13 @@ ActiveRecord::Schema.define(version: 2021_05_23_063751) do
     t.datetime "updated_at", null: false
     t.bigint "brand_id"
     t.index ["brand_id"], name: "index_products_on_brand_id"
+  create_table "stores", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "summary"
+    t.index ["user_id"], name: "index_stores_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -67,10 +78,16 @@ ActiveRecord::Schema.define(version: 2021_05_23_063751) do
     t.string "email", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_admin", default: false
+    t.string "role", default: "buyer"
     t.index ["email"], name: "unique_email", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "brands", "categories"
+<<<<<<< HEAD
   add_foreign_key "products", "brands"
+=======
+  add_foreign_key "stores", "users"
+>>>>>>> c247ff82013b15b03360e2ef8cfbf9554cda1434
 end

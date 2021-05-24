@@ -11,7 +11,8 @@ gem 'rails', '~> 5.2.6'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem "puma", ">= 4.3.8"
+gem "nokogiri", ">= 1.11.4"
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -71,3 +72,7 @@ gem 'activestorage-validator'
 gem 'cloudinary'
 
 gem "active_model_serializers", "~> 0.8.0"
+
+gem 'cancancan'
+
+gem "faker"

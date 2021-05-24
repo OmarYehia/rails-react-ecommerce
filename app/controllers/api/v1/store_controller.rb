@@ -1,46 +1,34 @@
-class Api::V1::BrandController < ApplicationController
+class Api::V1::StoreController < ApplicationController
   # Skipping token for testing purpose
-  skip_before_action :verify_authenticity_token
-  # before_action :authorized, only: [:create, :update, :delete]
-
+  # skip_before_action :verify_authenticity_token
+  before_action :authorized, only: [:create, :update, :delete]
+  before_action :is_admin, only: [:create, :update, :delete]
 
   def index
-    begin
-      category = Category.find(params[:category_id])
-      brands = category.brands.order(:created_at)
-      render json: {
-        success: true,
-        totalRecords: brands.length,
-        data: (ActiveModel::ArraySerializer.new(brands, each_serializer: BrandSerializer))
-      }, status: 200
-    rescue ActiveRecord::RecordNotFound => e
-      render json: {
-        success: false,
-        errors: e.message
-      }, status: 404
-    rescue Exception => e
-      render json: {
-        success: false,
-        errors: e.message
-      }, status: 500
-    end
+    stores = Store.all.order(:created_at)
+    render json: {
+      success: true,
+      totalRecords: stores.length,
+      data: (ActiveModel::ArraySerializer.new(stores, each_serializer: StoreSerializer))
+    }, status: 200
   end
 
   def create
     begin
-      category = Category.find(params[:category_id])
-      brand = category.brands.new(brand_params)
-      if brand.save()
+      store = Store.new(store_params)
+      seller = User.find(params[:sellerID])
+      store.user_id = params[:sellerID]
+      if store.save()
         render json: {
           success: true,
-          data: BrandSerializer.new(brand)
+          data: StoreSerializer.new(store)
         }, status: 201
       else
         render json: {
           success: false,
-          errors: brand.errors
+          errors: store.errors
         }, status: 400
-      end
+      end  
     rescue ActiveRecord::RecordNotFound => e
       render json: {
         success: false,
@@ -52,14 +40,15 @@ class Api::V1::BrandController < ApplicationController
         errors: e.message
       }, status: 500
     end
+
   end
 
   def show
     begin
-      brand = Brand.find(params[:id])
+      store = Store.find(params[:id])
       render json: {
         success: true,
-        data: BrandSerializer.new(brand)
+        data: StoreSerializer.new(store)
       } , status: 200
     rescue ActiveRecord::RecordNotFound => e
       render json: {
@@ -76,16 +65,18 @@ class Api::V1::BrandController < ApplicationController
 
   def update
     begin
-      brand = Brand.find(params[:id])
-      if brand.update(brand_params)
+      store = Store.find(params[:id])
+      seller = User.find(params[:sellerID])
+      store.user_id = params[:sellerID]
+      if store.update(store_params)
         render json: {
           success: true,
-          data: BrandSerializer.new(brand)
+          data: StoreSerializer.new(store)
         }, status: 202
       else
         render json: {
           success: false,
-          errors: brand.errors
+          errors: store.errors
         }, status: 400
       end
     rescue ActiveRecord::RecordNotFound => e
@@ -103,8 +94,8 @@ class Api::V1::BrandController < ApplicationController
 
   def destroy
     begin
-      brand = Brand.find(params[:id])
-      brand.delete()
+      store = Store.find(params[:id])
+      store.delete()
       render json: {
         success: true,
       }, status: 202
@@ -122,7 +113,7 @@ class Api::V1::BrandController < ApplicationController
   end
 
   private
-  def brand_params
-    params.permit(:name, :image)
+  def store_params
+    params.permit(:name, :summary)
   end
 end

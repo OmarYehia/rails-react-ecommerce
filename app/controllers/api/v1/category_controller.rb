@@ -1,11 +1,17 @@
 class Api::V1::CategoryController < ApplicationController
   # Skipping token for testing purpose
+<<<<<<< HEAD
   skip_before_action :verify_authenticity_token
   # before_action :authorized, only: [:create, :update, :delete]
+=======
+  # skip_before_action :verify_authenticity_token
+  # before_action :authorized, only: [:create, :update, :delete, :index]
+  # load_and_authorize_resource
+>>>>>>> c247ff82013b15b03360e2ef8cfbf9554cda1434
 
   
   def index
-    categories = Category.all
+    categories = Category.all.order(:created_at)
     render json: {
       success: true,
       totalRecords: categories.length,

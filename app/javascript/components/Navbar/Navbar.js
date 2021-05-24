@@ -28,7 +28,7 @@ const Navbar = ({user, logout}) => {
       )}
       {user && (
         <div className="navbar-items">
-          <Link to="#">
+          <Link to="/profile">
             <i className="fas fa-user"></i>
             {user.username}
           </Link>
