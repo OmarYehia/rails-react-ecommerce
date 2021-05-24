@@ -5,6 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 
 const CategoryList = ({ title, featured }) => {
   const [categories, setCategories] = useState(null);
+  const [filteredCategories, setFilteredCategories] = useState(null);
   const history = useHistory();
 
   useEffect(() => {
@@ -18,18 +19,37 @@ const CategoryList = ({ title, featured }) => {
           categories = categories.slice(0, +featured);
         }
         setCategories(categories);
+        setFilteredCategories(categories);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
+  const handleSearch = (e) => {
+    let filteredCategories = categories.filter(
+      (category) =>
+        category.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1
+    );
+    setFilteredCategories(filteredCategories);
+  };
+
   return (
     <div>
       {!featured && (
-        <div className="d-flex">
+        <div className="d-flex align-items-center mt-4 mb-3">
+          <div className="me-3">
+            <label htmlFor="search">Search</label>
+          </div>
+          <div className="">
+            <input
+              type="text"
+              className="form-control"
+              onChange={(e) => handleSearch(e)}
+            />
+          </div>
           <Link
-            className="ms-auto btn btn-primary btn-sm mt-5"
+            className="ms-auto btn btn-primary btn-sm"
             // onClick={history.goBack}
             to="/"
           >
@@ -40,8 +60,8 @@ const CategoryList = ({ title, featured }) => {
       <fieldset className="border p-2 shadow-sm">
         <legend>{title}</legend>
         <div className="category-container">
-          {categories &&
-            categories.map((category) => (
+          {filteredCategories &&
+            filteredCategories.map((category) => (
               <Link
                 className="card-cont"
                 to={`/categories/${category.id}/brands`}
