@@ -73,3 +73,5 @@ gem 'cloudinary'
 gem "active_model_serializers", "~> 0.8.0"
 
 gem 'cancancan'
+
+gem "faker"
