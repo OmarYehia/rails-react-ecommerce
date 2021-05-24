@@ -3,8 +3,8 @@ import "./CategoryUpdateForm.css";
 import { Link, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-const CategoryUpdateForm = () => {
-  const { categoryId } = useParams();
+const CategoryUpdateForm = ({ categoryId }) => {
+  // const { categoryId } = useParams();
   const [name, setName] = useState("");
   const [imageError, setImageError] = useState("");
   const [nameError, setNameError] = useState("");
