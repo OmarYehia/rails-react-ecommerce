@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_22_121655) do
+ActiveRecord::Schema.define(version: 2021_05_23_063751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,32 @@ ActiveRecord::Schema.define(version: 2021_05_22_121655) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "order_items", force: :cascade do |t|
+    t.string "state"
+    t.float "price"
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "order_id"
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.integer "quantity"
+    t.float "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "brand_id"
+    t.index ["brand_id"], name: "index_products_on_brand_id"
+  end
+
   create_table "stores", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "user_id"
@@ -68,9 +94,13 @@ ActiveRecord::Schema.define(version: 2021_05_22_121655) do
     t.boolean "is_admin", default: false
     t.string "role", default: "buyer"
     t.index ["email"], name: "unique_email", unique: true
+    t.index ["email"], name: "uniquectm_const", unique: true
+    t.index ["username"], name: "username_unique", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "brands", "categories"
+  add_foreign_key "order_items", "orders"
+  add_foreign_key "products", "brands"
   add_foreign_key "stores", "users"
 end

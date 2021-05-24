@@ -3,8 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import "./StoreForm.css";
 
-const StoreForm = ({ fetchURL }) => {
-  const { storeId } = useParams();
+const StoreForm = () => {
+  const fetchURL = "/api/v1/stores";
   const [name, setName] = useState("");
   const [owner, setOwner] = useState("");
   const [summary, setSummary] = useState("");

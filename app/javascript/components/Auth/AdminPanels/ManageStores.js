@@ -56,7 +56,7 @@ class ManageStores extends React.Component {
                                 <td>{element.owner.username}</td>
                                 <td>
                                     <button className="btn btn-success">Show</button>
-                                    <Link to={'#'}>
+                                    <Link to={`/stores/${element.id}/update`}>
                                         <button className="btn btn-warning">Update</button>
                                     </Link>
                                     <button className="btn btn-danger" onClick={() => this.deleteCategory(element.id)}>Delete</button>

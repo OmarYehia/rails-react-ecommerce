@@ -17,6 +17,11 @@ import CartList from "../components/ShoppingCart/CartList/CartList";
 import StoreForm from "../components/Store/StoreForm/StoreForm";
 import SellerForm from "../components/Auth/SellersForm/SellerForm";
 import UpdateForm from "../components/Auth/UpdateForm/UpdateForm";
+import StoreUpdateForm from "../components/Store/StoreUpdateForm/StoreUpdateForm";
+
+import ProductList from '../components/Product/ProductList/ProductList'
+import ProductUpdateForm from "../components/Product/ProductUpdateForm/ProductUpdateForm";
+import ProductCreateForm from "../components/Product/ProductCreateForm/ProductCreateForm";
 
 class App extends React.Component {
   constructor() {
@@ -33,7 +38,7 @@ class App extends React.Component {
     this.setState({ user: null });
   };
 
-  updateApp = () =>{
+  updateApp = () => {
     this.forceUpdate()
   }
 
@@ -83,6 +88,22 @@ class App extends React.Component {
               <Route exact path="/">
                 <LandingPage />
               </Route>
+              <Route
+                exact
+                path="/categories/:categoryId/:brandName/brands/"
+                component={ProductList}
+              />
+              <Route
+                exact
+                path="/products/:productId/update"
+                component={ProductUpdateForm}
+              />
+              <Route
+                exact
+                path="/brands/:brandId/products/new"
+                component={ProductCreateForm}
+              />
+
               <Route exact path="/categories">
                 <CategoryList title="Categories" />
               </Route>
@@ -108,7 +129,10 @@ class App extends React.Component {
                 component={BrandUpdateForm}
               />
               <Route path="/stores/new">
-                <StoreForm fetchURL="/api/v1/stores" />
+                <StoreForm />
+              </Route>
+              <Route path="/stores/:storeId/update">
+                <StoreUpdateForm />
               </Route>
               <Route path="/login">
                 <LoginForm setUser={this.updateUser} />
@@ -117,10 +141,10 @@ class App extends React.Component {
                 <SignUpForm />
               </Route>
               <Route exact path="/sellers/new">
-                <SellerForm getCookie={this.getCookie}/>
+                <SellerForm getCookie={this.getCookie} />
               </Route>
               <Route exact path="/sellers/:id/update">
-                <UpdateForm getCookie={this.getCookie}/>
+                <UpdateForm getCookie={this.getCookie} />
               </Route>
               <Route path="/profile">
                 {JSON.parse(localStorage.getItem("user")) ? (
@@ -144,6 +168,26 @@ class App extends React.Component {
                     getCookie={this.getCookie}
                   />
                 )}
+              </Route>
+              <Route path="profile/edit">
+                <div>
+                  <h1>{this.state.errors}</h1>
+                  <span>Username: </span>
+                  <input
+                    type="text"
+                    name="username"
+                    value={this.state.username}
+                    onChange={this.change}
+                  />
+                  <span>Email: </span>
+                  <input
+                    type="email"
+                    name="email"
+                    value={this.state.email}
+                    onChange={this.change}
+                  />
+                  <button onClick={this.update}>Update Profile</button>
+                </div>
               </Route>
               <Route path="/cart">
                 <CartList />
