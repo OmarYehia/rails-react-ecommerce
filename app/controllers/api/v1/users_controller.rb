@@ -178,6 +178,21 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def destroy
+    @user = User.find_by(id:params[:id])
+    if @user.present?
+      @user.delete()
+      render json: {
+        success: true,
+      }, status: 202
+    else
+      render json: {
+        success: false,
+        error: "User not found"
+      }, status: 400
+    end
+  end
+
 
 
   private

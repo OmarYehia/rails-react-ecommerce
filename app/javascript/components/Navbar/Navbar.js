@@ -24,6 +24,10 @@ const Navbar = ({user, logout}) => {
           <Link to="/login" className="btn btn-sm btn-dark loginBtn">
             Login
           </Link>
+          -
+          <Link to="/signup" className="btn btn-sm btn-dark loginBtn">
+            Register
+          </Link>
         </div>
       )}
       {user && (

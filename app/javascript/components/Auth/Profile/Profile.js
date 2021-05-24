@@ -48,7 +48,7 @@ class Profile extends React.Component {
     render() {
         if (this.state.redirect) return <Redirect to={this.state.redirect} />;
         else {
-            if (this.user) return <NotFound />
+            if (!this.user) return <Redirect to='/login' />;
             else {
                 return (
                     <div>

@@ -46,13 +46,19 @@ class LoginForm extends React.Component {
     else {
       return (
         <div>
-          <h1>{this.state.errors}</h1>
-          <span>Email: </span>
-          <input type="email" name="email" onChange={this.change} />
-          <span>Password: </span>
-          <input type="password" name="password" onChange={this.change} />
-          <button onClick={this.login}>Login</button>
-        </div>
+          {this.state.errors ? <div class="alert alert-danger" style={{padding: 10}}role="alert">{this.state.errors}</div> : ""}
+
+          <div className="form-group" style={{ padding: 10 }}>
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" className="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" onChange={this.change} placeholder="Enter email" />
+          </div>
+          <div className="form-group" style={{ padding: 10 }}>
+            <label for="exampleInputPassword">Password</label>
+            <input type="password" className="form-control" id="exampleInputPassword" name="password" aria-describedby="emailHelp" onChange={this.change} placeholder="Password" />
+          </div>
+          <button type="submit" className="btn btn-primary" onClick={this.login}>Submit</button>
+
+        </div >
       );
     }
   }

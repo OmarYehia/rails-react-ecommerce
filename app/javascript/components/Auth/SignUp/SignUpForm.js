@@ -1,5 +1,6 @@
 import React from "react";
 import { Redirect, browserHistory } from 'react-router-dom'
+import styles from "./SignUpForm.css";
 
 
 class LoginForm extends React.Component {
@@ -18,7 +19,7 @@ class LoginForm extends React.Component {
     change = (e) => {
         this.setState({ [e.target.name]: e.target.value })
     }
-    login = () => {
+    signup = () => {
         let user = {
             username: this.state.username,
             email: this.state.email,
@@ -59,21 +60,37 @@ class LoginForm extends React.Component {
             return <Redirect to={this.state.redirect}
             />
         else {
-            return <div>
-                <div>{this.state.errors.map(element =>
-                    <h2>{element}</h2>
-                )}</div>
-                <h1>{this.state.error}</h1>
-                <lable>Username: </lable>
-                <input type="text" name="username" placeholder="Username" onChange={this.change} />
-                <lable>Email: </lable>
-                <input type="email" name="email" placeholder="Example@example.com" onChange={this.change} />
-                <lable>Password: </lable>
-                <input type="password" name="password" placeholder="Password" onChange={this.change} />
-                <lable>Password Confirmation: </lable>
-                <input type="password" name="password_confirmation" placeholder="Password" onChange={this.change} />
-                <button onClick={this.login} >Login</button>
-            </div>
+            return (
+                <div>
+                    <div>{this.state.errors.map(element =>
+                        <div class="alert alert-danger" role="alert">
+                            {element}
+                        </div>
+                    )}</div>
+
+                    <h1>{this.state.error}</h1>
+                    <div className="form-group" style={{padding: 10}}>
+                        <label for="exampleInputUsername">Username</label>
+                        <input type="text" className="form-control" id="exampleInputUsername" name="username" aria-describedby="emailHelp" onChange={this.change} placeholder="Enter username" />
+                    </div>
+                    <div className="form-group" style={{padding: 10}}>
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" className="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" onChange={this.change} placeholder="Enter email" />
+                    </div>
+                    <div className="form-group" style={{padding: 10}}>
+                        <label for="exampleInputPassword">Password</label>
+                        <input type="password" className="form-control" id="exampleInputPassword" name="password" aria-describedby="emailHelp" onChange={this.change} placeholder="Password" />
+                    </div>
+                    <small id="passwordHelpBlock" class="form-text text-muted">
+                        Your password must be 8-20 characters long.</small>
+                    <div className="form-group" style={{padding: 10}}>
+                        <label for="exampleInputPasswordConfirmation">Password Confirmation</label>
+                        <input type="password" className="form-control" id="exampleInputPasswordConfirmation" name="password_confirmation" aria-describedby="emailHelp" onChange={this.change} placeholder="Password Confirmation" />
+                    </div>
+                    <button type="submit" className="btn btn-primary" onClick={this.signup}>Submit</button>
+
+                </div>
+            )
         }
     }
 }

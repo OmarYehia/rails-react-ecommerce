@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import BrandList from "../components/Brand/BrandList/BrandList";
 import CategoryList from "../components/Category/CategoryList/CategoryList";
 import LoginForm from "../components/Auth/Login/LoginForm";
@@ -15,6 +15,8 @@ import Navbar from "../components/Navbar/Navbar";
 import NotFound from "../components/NotFound/NotFound";
 import CartList from "../components/ShoppingCart/CartList/CartList";
 import StoreForm from "../components/Store/StoreForm/StoreForm";
+import SellerForm from "../components/Auth/SellersForm/SellerForm";
+import UpdateForm from "../components/Auth/UpdateForm/UpdateForm";
 
 class App extends React.Component {
   constructor() {
@@ -30,6 +32,10 @@ class App extends React.Component {
     window.localStorage.clear();
     this.setState({ user: null });
   };
+
+  updateApp = () =>{
+    this.forceUpdate()
+  }
 
   updateUser = (returnedUser) => {
     localStorage.setItem("user", JSON.stringify(returnedUser));
@@ -110,6 +116,12 @@ class App extends React.Component {
               <Route path="/signup">
                 <SignUpForm />
               </Route>
+              <Route exact path="/sellers/new">
+                <SellerForm getCookie={this.getCookie}/>
+              </Route>
+              <Route exact path="/sellers/:id/update">
+                <UpdateForm getCookie={this.getCookie}/>
+              </Route>
               <Route path="/profile">
                 {JSON.parse(localStorage.getItem("user")) ? (
                   JSON.parse(localStorage.getItem("user")).is_admin ? (
@@ -132,16 +144,6 @@ class App extends React.Component {
                     getCookie={this.getCookie}
                   />
                 )}
-              </Route>
-              <Route path="profile/edit">
-                <div>
-                  <h1>{this.state.errors}</h1>
-                  <span>Username: </span>
-                  <input type="text" name="username" value={this.state.username} onChange={this.change} />
-                  <span>Email: </span>
-                  <input type="email" name="email" value={this.state.email} onChange={this.change} />
-                  <button onClick={this.update}>Update Profile</button>
-                </div>
               </Route>
               <Route path="/cart">
                 <CartList />
