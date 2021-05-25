@@ -28,6 +28,7 @@ import StoreUpdateForm from "../components/Store/StoreUpdateForm/StoreUpdateForm
 import ProductList from "../components/Product/ProductList/ProductList";
 import ProductUpdateForm from "../components/Product/ProductUpdateForm/ProductUpdateForm";
 import ProductCreateForm from "../components/Product/ProductCreateForm/ProductCreateForm";
+import ProductPage from "../components/Product/ProductPage/ProductPage";
 
 class App extends React.Component {
   constructor() {
@@ -94,6 +95,11 @@ class App extends React.Component {
               <Route exact path="/">
                 <LandingPage />
               </Route>
+              <Route
+                exact
+                path="/categories/:categoryId/:brandName/products/:productId"
+                component={ProductPage}
+              />
               <Route
                 exact
                 path="/categories/:categoryId/:brandName/brands/"

@@ -29,7 +29,7 @@ const ProductList = () => {
                     products.map((product) => (
                         <Link
                             className="card-cont"
-                            to={`products/${product.title}`}
+                            to={`products/${product.id}`}
                             key={product.id}
                         >
                         <ProductCard product={product} />

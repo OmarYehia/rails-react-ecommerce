@@ -30,6 +30,9 @@ const ProductCard = ({ product }) => {
           <button className="btn-primary">
             Order Now
           </button>
+          <button className="btn-secondary">
+            Add to Cart
+          </button>
        </div>
       </div>
     </div>
