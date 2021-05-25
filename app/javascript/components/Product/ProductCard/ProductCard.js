@@ -1,9 +1,10 @@
 import { Button } from "bootstrap";
-import React from "react";
+import React, { useState } from "react";
 import "./ProductCard.css";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, addToCart}) => {
   const quantityOfProduct = product.quantity;
+
 
   return (
     <div className="card product-card shadow-sm">
@@ -30,7 +31,7 @@ const ProductCard = ({ product }) => {
           <button className="btn-primary">
             Order Now
           </button>
-          <button className="btn-secondary">
+          <button className="btn-secondary" onClick={() => addToCart(product)}>
             Add to Cart
           </button>
        </div>

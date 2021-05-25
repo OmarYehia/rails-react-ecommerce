@@ -20,6 +20,22 @@ const ProductList = () => {
         })
     }, [])
 
+    const [cart, setCart] = useState([]);
+    
+    useEffect(() => {
+        console.log(cart)
+        localStorage.setItem("cart", cart)
+    }, [cart])
+
+    const addToCart = id => {
+        // setCart([...cart, product.id]);
+        setCart(cart => [...cart, id.id]);
+        console.log(`This is the Id of the current Tagged product => ${id.id}`);
+        
+        // localStorage.setItem("Cart", temp )
+        
+    }
+
     return(
         <div>
             <h1>Products</h1>
@@ -27,13 +43,13 @@ const ProductList = () => {
                 {
                     products && 
                     products.map((product) => (
-                        <Link
+                        <div
                             className="card-cont"
                             to={`products/${product.id}`}
                             key={product.id}
                         >
-                        <ProductCard product={product} />
-                        </Link>
+                        <ProductCard product={product} addToCart={addToCart} />
+                        </div>
                     ))
                 }
             </div>
