@@ -114,7 +114,7 @@ class ManageStores extends React.Component {
                                 this.componentDidMount();
                             }}
                         >
-                            Back to Manage Categories
+                            Back to Manage Stores
             </button>
                     </div>
                 )}
@@ -128,7 +128,7 @@ class ManageStores extends React.Component {
                                 this.componentDidMount();
                             }}
                         >
-                            Back to Manage Categories
+                            Back to Manage Stores
             </button>
                     </div>
                 )}
