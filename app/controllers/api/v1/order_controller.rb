@@ -62,7 +62,58 @@ class Api::V1::OrderController < ApplicationController
     end
   
    
-  def show
+  def get_order_items
+    orderItems = OrderItem.all
+    res = []
+    for item in orderItems do
+      if item.product.store_id == params[:id].to_i
+        res.push(item)
+      end
+    end
+    if res.length > 0
+      render json: {
+        success: true,
+        data: (ActiveModel::ArraySerializer.new(res, each_serializer: OrderItemSerializer))
+      }, status: 200
+    else
+      render json: {
+        success: false,
+        error: "No orders available for this user"
+      }, status: 404
+    end
+  end
+
+  def approve
+    orderItem = OrderItem.find_by(id: params[:id])
+    byebug
+    if orderItem
+      orderItem.state = "approved"
+      orderItem.save
+      render json: {
+        success: true,
+      }, status: 202
+    else
+      render json: {
+        success: false,
+        error: "Order item not found"
+      }, status: 404
+    end
+  end
+
+  def decline
+    orderItem = OrderItem.find_by(id: params[:id])
+    if orderItem
+      orderItem.state = "declined"
+      orderItem.save
+      render json: {
+        success: true,
+      }, status: 202
+    else
+      render json: {
+        success: false,
+        error: "Order item not found"
+      }, status: 404
+    end
   end
 
   private
