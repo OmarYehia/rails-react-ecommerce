@@ -3,8 +3,8 @@ import "./BrandUpdateForm.css";
 import { Link, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-const BrandUpdateForm = () => {
-  const { brandId } = useParams();
+const BrandUpdateForm = ({brandId}) => {
+  // const { brandId } = useParams();
   const [name, setName] = useState("");
   const [imageError, setImageError] = useState("");
   const [nameError, setNameError] = useState("");

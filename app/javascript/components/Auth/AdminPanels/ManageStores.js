@@ -1,6 +1,8 @@
 import React from "react";
 import { Ring } from "react-awesome-spinners"
 import { Redirect, browserHistory, Link } from "react-router-dom";
+import StoreForm from "../../Store/StoreForm/StoreForm"
+import StoreUpdateForm from "../../Store/StoreUpdateForm/StoreUpdateForm"
 
 class ManageStores extends React.Component {
     constructor() {
@@ -9,6 +11,11 @@ class ManageStores extends React.Component {
             stores: null,
             loading: true,
             url: window.location.pathname,
+            deleteSuccess: false,
+            deleteFail: false,
+            create: false,
+            update: false,
+            updateID: null,
         }
     }
     componentDidMount() {
@@ -31,13 +38,38 @@ class ManageStores extends React.Component {
                 }
             })
                 .then(response => response.json())
-                .then(result => this.setState({ deletedCategory: true }))
+                .then(result => {
+                    if (!result.errors) {
+                        this.setState({ deleteSuccess: true, deleteFail: false });
+                        this.componentDidMount();
+                    } else {
+                        this.setState({ deleteFail: true, deleteSuccess: false });
+                    }
+                })
         }
     }
     render() {
         return (
             this.state.loading ? <Ring /> : <div>
-                <table class="table table-hover">
+                {this.state.deleteSuccess ? (
+                    <center>
+                        <div className="alert alert-success">
+                            Category deleted successfully !
+            </div>
+                    </center>
+                ) : (
+                    ""
+                )}
+                {this.state.deleteFail ? (
+                    <center>
+                        <div className="alert alert-danger">
+                            Category was not deleted, Contact an admin for help.
+            </div>
+                    </center>
+                ) : (
+                    ""
+                )}
+                {!this.state.create && !this.state.update ? (<table class="table table-hover">
                     <thead>
                         <tr>
                             <th scope="col">Seller ID</th>
@@ -55,19 +87,51 @@ class ManageStores extends React.Component {
                                 <td>{element.summary}</td>
                                 <td>{element.owner.username}</td>
                                 <td>
-                                    <button className="btn btn-success">Show</button>
-                                    <Link to={`/stores/${element.id}/update`}>
-                                        <button className="btn btn-warning">Update</button>
-                                    </Link>
+                                    <button className="btn btn-warning" onClick={() =>
+                                        this.setState({
+                                            update: !this.state.update,
+                                            updateID: element.id,
+                                        })
+                                    }>Update</button>
                                     <button className="btn btn-danger" onClick={() => this.deleteCategory(element.id)}>Delete</button>
                                 </td>
                             </tr>
                         )}
                     </tbody>
-                    <Link to='/stores/new'>
-                        <button className="btn btn-primary">Create New Store</button>
-                    </Link>
-                </table>
+                    <button className="btn btn-primary" onClick={() =>
+                        this.setState({
+                            create: !this.state.create,
+                        })
+                    }>Create New Store</button>
+                </table>) : ""}
+                {this.state.create && (
+                    <div className="d-flex flex-column justify-content-center">
+                        <StoreForm getCookie={this.props.getCookie} />
+                        <button
+                            className="btn btn-primary ms-auto mt-3 me-5"
+                            onClick={() => {
+                                this.setState({ create: !this.state.create });
+                                this.componentDidMount();
+                            }}
+                        >
+                            Back to Manage Stores
+            </button>
+                    </div>
+                )}
+                {this.state.update && (
+                    <div className="d-flex flex-column justify-content-center">
+                        <StoreUpdateForm storeId={this.state.updateID} getCookie={this.props.getCookie}/>
+                        <button
+                            className="btn btn-primary ms-auto mt-3 me-5"
+                            onClick={() => {
+                                this.setState({ update: !this.state.update, updateID: null });
+                                this.componentDidMount();
+                            }}
+                        >
+                            Back to Manage Stores
+            </button>
+                    </div>
+                )}
             </div>
         )
     }

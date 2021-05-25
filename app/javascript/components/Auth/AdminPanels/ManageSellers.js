@@ -1,6 +1,8 @@
 import React from "react";
 import { Ring } from "react-awesome-spinners"
 import { NavLink, Link } from "react-router-dom";
+import SellerForm from "../SellersForm/SellerForm"
+import UpdateForm from "../UpdateForm/UpdateForm"
 class ManageSellers extends React.Component {
     constructor() {
         super();
@@ -10,6 +12,9 @@ class ManageSellers extends React.Component {
             url: window.location.pathname,
             deleteSuccess: false,
             deleteFail: false,
+            create: false,
+            update: false,
+            updateID: null,
         }
     }
     componentDidMount() {
@@ -47,7 +52,7 @@ class ManageSellers extends React.Component {
             this.state.loading ? <Ring /> : <div>
                 {this.state.deleteSuccess ? <center><div className="alert alert-success">Seller deleted successfully !</div></center> : ""}
                 {this.state.deleteFail ? <center><div className="alert alert-danger">Seller was not deleted, Contact an admin for help.</div></center> : ""}
-                <table class="table table-hover">
+                {!this.state.create && !this.state.update ? (<table class="table table-hover">
                     <thead>
                         <tr >
                             <th scope="col">Seller ID</th>
@@ -63,22 +68,49 @@ class ManageSellers extends React.Component {
                                 <td>{element.username}</td>
                                 <td>{element.email}</td>
                                 <td>
-                                    <Link>
-                                        <button className="btn btn-success">Show</button>
-                                    </Link>
-                                    <Link to={`/sellers/${element.id}/update`}>
-                                        <button className="btn btn-warning">Update</button>
-                                    </Link>
+                                    <button className="btn btn-warning" onClick={() =>
+                                        this.setState({
+                                            update: !this.state.update,
+                                            updateID: element.id,
+                                        })} > Update</button>
                                     <button className="btn btn-danger" onClick={() => this.deleteSeller(element.id)}>Delete</button>
-
                                 </td>
                             </tr>
                         )}
                     </tbody>
-                    <NavLink to='/sellers/new'>
-                        <button className="btn btn-primary">Add New Seller</button>
-                    </NavLink>
-                </table>
+                    <button className="btn btn-primary" onClick={() =>
+                        this.setState({
+                            create: !this.state.create,
+                        })}> Add New Seller</button>
+                </table>) : ("")}
+                {this.state.create && (
+                    <div className="d-flex flex-column justify-content-center">
+                        <SellerForm getCookie={this.props.getCookie}/>
+                        <button
+                            className="btn btn-primary ms-auto mt-3 me-5"
+                            onClick={() => {
+                                this.setState({ create: !this.state.create });
+                                this.componentDidMount();
+                            }}
+                        >
+                            Back to Manage Sellers
+            </button>
+                    </div>
+                )}
+                {this.state.update && (
+                    <div className="d-flex flex-column justify-content-center">
+                        <UpdateForm id={this.state.updateID} getCookie={this.props.getCookie}/>
+                        <button
+                            className="btn btn-primary ms-auto mt-3 me-5"
+                            onClick={() => {
+                                this.setState({ update: !this.state.update, updateID: null });
+                                this.componentDidMount();
+                            }}
+                        >
+                            Back to Manage Sellers
+            </button>
+                    </div>
+                )}
             </div>
         )
     }

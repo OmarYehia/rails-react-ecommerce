@@ -3,8 +3,8 @@ import "./ProductUpdateForm.css";
 import { Link, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-const ProductUpdateForm = () => {
-  const { productId } = useParams();
+const ProductUpdateForm = ({productId}) => {
+  // const { productId } = useParams();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");

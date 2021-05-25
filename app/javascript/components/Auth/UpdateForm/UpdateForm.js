@@ -17,7 +17,7 @@ class UpdateForm extends React.Component {
     };
 
     componentDidMount() {
-        let id = this.fetchData(this.props.match.params.id)
+        let id = this.props.id
         fetch(`/api/v1/users/${id}`, {
             headers: {
                 "Authorization": `Bearer ${this.props.getCookie("Authorization")}`

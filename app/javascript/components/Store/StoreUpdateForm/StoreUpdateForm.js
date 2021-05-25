@@ -3,8 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import "../StoreForm/StoreForm.css";
 
-const StoreUpdateForm = () => {
-  const { storeId } = useParams();
+const StoreUpdateForm = ({storeId}) => {
+  // const { storeId } = useParams();
   const [name, setName] = useState("");
   const [owner, setOwner] = useState(null);
   const [summary, setSummary] = useState("");

@@ -4,8 +4,8 @@ import "./BrandCreateForm.css";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-const BrandCreateForm = () => {
-  const { categoryId } = useParams();
+const BrandCreateForm = ({categoryId}) => {
+  // const { categoryId } = useParams();
   const [name, setName] = useState("");
   const [imageError, setImageError] = useState("");
   const [nameError, setNameError] = useState("");
