@@ -114,6 +114,23 @@ class Api::V1::StoreController < ApplicationController
     end
   end
 
+  def get_products
+    store = Store.find_by(id: params[:id])
+    if store
+      products = store.products
+      render json: {
+        success: true,
+        totalRecords: products.length,
+        data: (ActiveModel::ArraySerializer.new(products, each_serializer: ProductSerializer))
+      }, status: 200
+    else
+      render json: {
+        success: false,
+        errors: "Store not found"
+      }, status: 404
+    end
+  end
+
   def destroy
     begin
       store = Store.find(params[:id])

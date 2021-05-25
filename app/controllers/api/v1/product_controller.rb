@@ -28,7 +28,9 @@ class Api::V1::ProductController < ApplicationController
   def create
     begin
       brand = Brand.find(params[:id])
+      store = Store.find(params[:storeId])
       product = brand.products.new(product_params)
+      product.store = store
       if product.save()
         render json: {
           success: true,
