@@ -63,6 +63,28 @@ class Api::V1::StoreController < ApplicationController
     end
   end
 
+  def show_by_userId
+    begin
+      store = Store.find_by(user_id: params[:id])
+      if store
+        render json: {
+          success: true,
+          data: StoreSerializer.new(store)
+        } , status: 200
+      else
+        render json: {
+          success: false,
+          errors: "This user doesn't own a store"
+        }, status: 404
+      end
+    rescue Exception => e
+      render json: {
+        success: false,
+        errors: e.message
+      }, status: 500
+    end
+  end
+
   def update
     begin
       store = Store.find(params[:id])
