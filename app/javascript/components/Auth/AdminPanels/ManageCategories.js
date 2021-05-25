@@ -5,6 +5,7 @@ import CategoryUpdateForm from "../../Category/CategoryUpdateForm/CategoryUpdate
 import ManageBrands from "./ManageBrands";
 
 import { Ring } from "react-awesome-spinners";
+
 class ManageCategories extends React.Component {
   constructor() {
     super();

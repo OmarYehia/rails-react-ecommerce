@@ -2,7 +2,8 @@ class Product < ApplicationRecord
     include Rails.application.routes.url_helpers
 
     belongs_to :brand
-
+    belongs_to :store
+    
     has_one_attached :image, dependent: :destroy
     validates :title, presence: true
     validates :description, presence: true 
