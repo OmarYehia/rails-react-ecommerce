@@ -68,7 +68,6 @@ class ManageSellers extends React.Component {
                                 <td>{element.username}</td>
                                 <td>{element.email}</td>
                                 <td>
-                                    <button className="btn btn-success">Show</button>
                                     <button className="btn btn-warning" onClick={() =>
                                         this.setState({
                                             update: !this.state.update,

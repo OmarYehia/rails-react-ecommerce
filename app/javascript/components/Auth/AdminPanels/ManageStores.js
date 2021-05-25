@@ -87,7 +87,6 @@ class ManageStores extends React.Component {
                                 <td>{element.summary}</td>
                                 <td>{element.owner.username}</td>
                                 <td>
-                                    <button className="btn btn-success">Show</button>
                                     <button className="btn btn-warning" onClick={() =>
                                         this.setState({
                                             update: !this.state.update,
