@@ -24,7 +24,7 @@ const ProductList = () => {
     
     useEffect(() => {
         console.log(cart)
-        localStorage.setItem("cart", cart)
+        localStorage.setItem("cart", JSON.stringify(cart))
     }, [cart])
 
     const addToCart = id => {
