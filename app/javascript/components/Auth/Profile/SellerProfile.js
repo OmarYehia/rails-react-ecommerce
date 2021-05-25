@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import ManageOrders from "../SellerPanels/ManageOrders";
 import ManageStore from "../SellerPanels/ManageStore";
 import UpdateForm from "../UpdateForm/UpdateForm";
 import "./SellerProfile.css";
 
 const SellerProfile = ({ user, getCookie }) => {
-  console.log(user);
   return (
     <Router>
       <div className="">
@@ -30,7 +30,9 @@ const SellerProfile = ({ user, getCookie }) => {
               <Route path="/profile/edit">
                 <UpdateForm id={user.id} getCookie={getCookie} />
               </Route>
-              <Route path="/profile/approve-orders"></Route>
+              <Route path="/profile/approve-orders">
+                <ManageOrders userId={user.id} />
+              </Route>
               <Route path="/profile/manage-store">
                 <ManageStore userId={user.id} />
               </Route>
