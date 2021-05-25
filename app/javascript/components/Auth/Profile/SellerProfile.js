@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import ManageStore from "../SellerPanels/ManageStore";
 import UpdateForm from "../UpdateForm/UpdateForm";
 import "./SellerProfile.css";
 
@@ -14,24 +15,28 @@ const SellerProfile = ({ user, getCookie }) => {
             <Link to="/profile/edit" className="link-item">
               Edit Profile
             </Link>
-            <Link to="/mystore/approve-orders" className="link-item">
+            <Link to="/profile/approve-orders" className="link-item">
               Approve Orders
             </Link>
-            <Link to="/mystore/manage-store" className="link-item">
+            <Link to="/profile/manage-store" className="link-item">
               Manage store
             </Link>
           </div>
         </div>
         {/* Body */}
-        <div className="container content">
-          <Switch>
-            <Route path="/profile/edit">
-              {user && <UpdateForm id={user.id} getCookie={getCookie} />}
-            </Route>
-            <Route path="mystore/approve-orders"></Route>
-            <Route path="mystore/manage-store"></Route>
-          </Switch>
-        </div>
+        {user && (
+          <div className="container content">
+            <Switch>
+              <Route path="/profile/edit">
+                <UpdateForm id={user.id} getCookie={getCookie} />
+              </Route>
+              <Route path="/profile/approve-orders"></Route>
+              <Route path="/profile/manage-store">
+                <ManageStore userId={user.id} />
+              </Route>
+            </Switch>
+          </div>
+        )}
       </div>
     </Router>
   );
