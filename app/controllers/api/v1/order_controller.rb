@@ -1,12 +1,18 @@
 class Api::V1::OrderController < ApplicationController
   def index
-    orderItems = Order.all.order(:created_at)
+    orders = Order.where(user_id: params[:user_id])
+    if orders.length > 0
     render json: {
       success: true,
-      totalRecords: orderItems.length,
-      data: (ActiveModel::ArraySerializer.new(orderItems, each_serializer: OrderItemSerializer))
+      totalRecords: orders.length,
+      data: (ActiveModel::ArraySerializer.new(orders, each_serializer: OrderSerializer))
     }, status: 200
-
+    else
+      render json: {
+        success: false,
+        error: "No orders available for this user"
+      }, status: 404
+    end
   end
 
   def create
@@ -35,8 +41,8 @@ class Api::V1::OrderController < ApplicationController
       if flag 
         render json: {
           success: true,
-          message: "OrderItems created successfully",
-          data: order
+          message: "Order created successfully",
+          data: OrderSerializer.new(order)
         }, status: 201
       else
         order.delete
