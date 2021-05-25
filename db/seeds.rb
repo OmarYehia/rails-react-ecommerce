@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-# user = User.create(username: "yehia", password_digest: "123456", email: "yehia@yehia.com")
+user = User.create(username: "admin", password: "123456", email: "admin@admin.com",password_confirmatio: "123456",is_admin: true)
 Category.destroy_all
 
 category1 = Category.new({ name: "Electronics" })
