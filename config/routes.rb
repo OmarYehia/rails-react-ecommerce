@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get 'stores/', to: "store#index"
       post 'stores/', to: "store#create"
       get 'stores/:id', to: "store#show"
+      get 'stores/:id/products', to: "store#products"
       get 'users/:id/store', to: "store#show_by_userId"
       delete 'stores/:id', to: "store#destroy"
       put 'stores/:id', to: "store#update"

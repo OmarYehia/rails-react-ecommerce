@@ -84,6 +84,28 @@ class Api::V1::StoreController < ApplicationController
       }, status: 500
     end
   end
+  
+  def products
+    begin
+      store = Store.find_by(id:params[:id])
+      products = store.products.order(:created_at)
+      render json: {
+        success: true,
+        totalRecords: products.length,
+        data: (ActiveModel::ArraySerializer.new(products, each_serializer: ProductSerializer))
+      }, status: 200
+    rescue ActiveRecord::RecordNotFound => e
+      render json: {
+        success: false,
+        errors: e.message
+      }, status: 404
+    rescue Exception => e
+      render json: {
+        success: false,
+        errors: e.message
+      }, status: 500
+    end  
+  end
 
   def update
     begin
