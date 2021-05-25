@@ -21,6 +21,7 @@ import Navbar from "../components/Navbar/Navbar";
 import NotFound from "../components/NotFound/NotFound";
 import CartList from "../components/ShoppingCart/CartList/CartList";
 import StoreForm from "../components/Store/StoreForm/StoreForm";
+import StoreList from "../components/Store/StoreList/StoreList";
 import SellerForm from "../components/Auth/SellersForm/SellerForm";
 import UpdateForm from "../components/Auth/UpdateForm/UpdateForm";
 import StoreUpdateForm from "../components/Store/StoreUpdateForm/StoreUpdateForm";
@@ -109,6 +110,14 @@ class App extends React.Component {
                 path="/brands/:brandId/products/new"
                 component={ProductCreateForm}
               />
+
+              <Route exact path="/stores">
+                <StoreList title="Stores" />
+              </Route>
+
+              <Route exact path="/categories">
+                <CategoryList title="Categories" />
+              </Route>
 
               <Route exact path="/categories">
                 <CategoryList title="Categories" />

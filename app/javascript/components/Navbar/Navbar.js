@@ -17,6 +17,7 @@ const Navbar = ({user, logout}) => {
       </Link>
       <div className="navbar-links">
         <Link to="/categories">Categories</Link>
+        <Link to="/stores">Stores</Link>
         <Link to="#">About us</Link>
       </div>
       {!user && (

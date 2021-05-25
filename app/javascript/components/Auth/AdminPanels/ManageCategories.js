@@ -107,14 +107,14 @@ class ManageCategories extends React.Component {
                     <td>{element.name}</td>
                     <td>
                       <button
-                        className="btn btn-success"
+                        className="btn btn-success me-2 btn-sm"
                         onClick={() => this.getBrands(element.id)}
                       >
                         Show Brands
                       </button>
                       {/* <Link to={`/categories/${element.id}/update`}> */}
                       <button
-                        className="btn btn-outline-primary me-2 btn-sm"
+                        className="btn btn-warning me-2 btn-sm"
                         onClick={() =>
                           this.setState({
                             update: !this.state.update,
