@@ -6,6 +6,7 @@
     "@popperjs/core": "^2.9.2",
     "@rails/webpacker": "5.3.0",
     "@types/popper.js": "^1.11.0",
+    "babel-helpers": "^6.24.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bootstrap": "^5.0.0",
     "dotenv": "^9.0.2",
