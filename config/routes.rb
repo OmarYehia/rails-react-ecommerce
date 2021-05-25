@@ -5,6 +5,8 @@ Rails.application.routes.draw do
       get 'orders/:user_id' , to:"order#index"
       post 'orders/', to:"order#create"
       get 'stores/:id/orders', to: "order#get_order_items"
+      post 'orders/:id/approve', to: "order#approve"
+      post 'orders/:id/decline', to: "order#decline"
     end
   end
   namespace :api do

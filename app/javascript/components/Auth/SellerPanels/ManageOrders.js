@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 
 const ManageOrders = ({ userId }) => {
   const [orders, setOrders] = useState(null);
   const [store, setStore] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [cookies, setCookies] = useCookies();
+  const [approved, setApproved] = useState(null);
+  const [declined, setDeclined] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetch(`/api/v1/users/${userId}/store`)
@@ -34,7 +39,45 @@ const ManageOrders = ({ userId }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [approved, error]);
+
+  const approveOrder = (id) => {
+    fetch(`/api/v1/orders/${id}/approve`, {
+      method: "POST",
+      headers: {
+        "X-CSRF-TOKEN": document.querySelector('[name="csrf-token"]').content,
+        Authorization: `Bearer ${cookies.Authorization}`,
+      },
+    }).then((res) => {
+      if (res.ok) {
+        setApproved(true);
+        setError(false);
+        return res.json();
+      } else {
+        setError(true);
+        setApproved(false);
+      }
+    });
+  };
+
+  const declineOrder = (id) => {
+    fetch(`/api/v1/orders/${id}/decline`, {
+      method: "POST",
+      headers: {
+        "X-CSRF-TOKEN": document.querySelector('[name="csrf-token"]').content,
+        Authorization: `Bearer ${cookies.Authorization}`,
+      },
+    }).then((res) => {
+      if (res.ok) {
+        setDeclined(true);
+        setError(false);
+        return res.json();
+      } else {
+        setError(true);
+        setDeclined(false);
+      }
+    });
+  };
 
   return (
     <div className="store-content d-flex justify-content-center">
@@ -61,6 +104,19 @@ const ManageOrders = ({ userId }) => {
                   You currently have to pending orders to approve...
                 </h4>
               )}
+              {approved && (
+                <div className="alert alert-success">
+                  Order approved successfully
+                </div>
+              )}
+              {declined && (
+                <div className="alert alert-info">Order declined :(</div>
+              )}
+              {error && (
+                <div className="alert alert-success">
+                  Something went wrong. Try again later.
+                </div>
+              )}
               {orders && (
                 <table className="table table-hover table-striped">
                   <thead>
@@ -81,14 +137,22 @@ const ManageOrders = ({ userId }) => {
                         <td>{order.price}</td>
                         <td>
                           {order.state === "pending" ? (
-                            <button
-                              className="btn btn-success btn-sm"
-                              onClick={() => approveOrder(order.id)}
-                            >
-                              Approve
-                            </button>
+                            <div>
+                              <button
+                                className="btn btn-success btn-sm me-2"
+                                onClick={() => approveOrder(order.id)}
+                              >
+                                Approve
+                              </button>
+                              <button
+                                className="btn btn-danger btn-sm"
+                                onClick={() => declineOrder(order.id)}
+                              >
+                                Decline
+                              </button>
+                            </div>
                           ) : (
-                            "Order approved"
+                            order.state
                           )}
                         </td>
                       </tr>
