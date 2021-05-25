@@ -37,7 +37,7 @@ const Navbar = ({user, logout}) => {
             <i className="fas fa-user"></i>
             {user.username}
           </Link>
-          <Link to="#">
+          <Link to="/cart">
             <i className="fas fa-shopping-cart"></i>
           </Link>
           <Link to="#" className="btn btn-sm btn-dark loginBtn" onClick={logout}>

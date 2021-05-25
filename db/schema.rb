@@ -57,12 +57,16 @@ ActiveRecord::Schema.define(version: 2021_05_25_172020) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "order_id"
+    t.bigint "product_id"
     t.index ["order_id"], name: "index_order_items_on_order_id"
+    t.index ["product_id"], name: "index_order_items_on_product_id"
   end
 
   create_table "orders", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -96,13 +100,13 @@ ActiveRecord::Schema.define(version: 2021_05_25_172020) do
     t.boolean "is_admin", default: false
     t.string "role", default: "buyer"
     t.index ["email"], name: "unique_email", unique: true
-    t.index ["email"], name: "uniquectm_const", unique: true
-    t.index ["username"], name: "username_unique", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "brands", "categories"
   add_foreign_key "order_items", "orders"
+  add_foreign_key "order_items", "products"
+  add_foreign_key "orders", "users"
   add_foreign_key "products", "brands"
   add_foreign_key "products", "stores"
   add_foreign_key "stores", "users"
