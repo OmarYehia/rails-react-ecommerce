@@ -1,38 +1,49 @@
 class Api::V1::OrderController < ApplicationController
   def index
-    orderItems = Order.all.order(:created_at)
+    orders = Order.where(user_id: params[:user_id])
+    if orders.length > 0
     render json: {
       success: true,
-      totalRecords: orderItems.length,
-      data: (ActiveModel::ArraySerializer.new(orderItems, each_serializer: OrderItemSerializer))
+      totalRecords: orders.length,
+      data: (ActiveModel::ArraySerializer.new(orders, each_serializer: OrderSerializer))
     }, status: 200
-
+    else
+      render json: {
+        success: false,
+        error: "No orders available for this user"
+      }, status: 404
+    end
   end
 
   def create
     flag = true
     orderItems = params[:orderItems]
-    order = Order.new()
+    order = Order.new
+    order.user_id = params[:id]
     if order.save()
       for item in orderItems do
         orderItem = OrderItem.new
         product = Product.find_by(id: item[:id])
-        orderItem.price = item[:quantity] * product.price
-        orderItem.quantity = item[:quantity]
-        orderItem.order_id = order.id
-
-        if !orderItem.save()
-          flag = false
+        if item[:quantity].to_i <= product.quantity
+          orderItem.price = item[:quantity].to_i * product.price
+          orderItem.quantity = item[:quantity].to_i
+          orderItem.order_id = order.id
+          orderItem.product_id = product.id
+  
+          if !orderItem.save()
+            flag = false
+          end
+         
         end
       end   
+        
       
       if flag 
         render json: {
           success: true,
-          message: "OrderItems created successfully",
-          data: order
+          message: "Order created successfully",
+          data: OrderSerializer.new(order)
         }, status: 201
-      
       else
         order.delete
         render json: {
@@ -57,5 +68,8 @@ class Api::V1::OrderController < ApplicationController
   private
   def orderItem_params
     params.permit(:quantity, :price, :state, :order_id)
+  end
+  def order_params
+    params.permit(:user_id)
   end
 end

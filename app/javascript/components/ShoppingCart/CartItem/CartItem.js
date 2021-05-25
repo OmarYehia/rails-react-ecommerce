@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 const CartItem = ({ productId, setCart, totalPrice, setTotalPrice }) => {
     const [product, setProduct] = useState(null);
-    const [quantity, setQuantity] = useState(0)
+    const [quantity, setQuantity] = useState(1)
 
     
     useEffect(()=>{
-        fetch(`/api/v1/categories/${productId}`)
+        fetch(`/api/v1/products/${productId}`)
         .then(res => {
             if(res.ok) {
                 return res.json()
@@ -18,7 +18,7 @@ const CartItem = ({ productId, setCart, totalPrice, setTotalPrice }) => {
             }
         })
         .then(data => {
-            setProduct(data.data.category)
+            setProduct(data.data.product)
         })
         .catch(err=>{
             console.log(err);
@@ -40,20 +40,15 @@ const CartItem = ({ productId, setCart, totalPrice, setTotalPrice }) => {
                 <img src={product.imageUrl} height="120" width="120"/>
             </div>
             <div className="col-4">
-                <p>{product.name}</p>
+                <p>{product.title}</p>
             </div>
             <div className="col-2">
-                {/* <input type="number" max={product.stockQuanitity} onChange={(e)=>setQuantity(e.target.value)}/> */}
-                <input type="number" max="5" onChange={(e)=>{
-                    setQuantity(e.target.value)
-                }}/>
-
+                { <input type="number" value={quantity}  max={product.quantity} onChange={(e)=>setQuantity(e.target.value)}/> }
+               
             </div>
             <div className="col-2">
-                {/* <p>{product.price * quantity}</p> */}
-                <p>
-                    {20 * quantity}
-                </p>
+                { <p>{product.price * quantity}</p> }
+                
 
             </div>
             <div className="col-2">

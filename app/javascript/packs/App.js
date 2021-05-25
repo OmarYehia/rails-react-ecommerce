@@ -29,6 +29,7 @@ import StoreUpdateForm from "../components/Store/StoreUpdateForm/StoreUpdateForm
 import ProductList from "../components/Product/ProductList/ProductList";
 import ProductUpdateForm from "../components/Product/ProductUpdateForm/ProductUpdateForm";
 import ProductCreateForm from "../components/Product/ProductCreateForm/ProductCreateForm";
+import OrderList from "../components/Order/OrderList/OrderList";
 
 class App extends React.Component {
   constructor() {
@@ -191,7 +192,10 @@ class App extends React.Component {
                 )}
               </Route>
               <Route path="/cart">
-                <CartList />
+                {this.state.user && <CartList user={this.state.user} />}
+              </Route>
+              <Route path="/orders">
+                {this.state.user && <OrderList user={this.state.user} />}
               </Route>
               <Route path="*">
                 <NotFound />
