@@ -2,6 +2,7 @@ class Product < ApplicationRecord
     include Rails.application.routes.url_helpers
 
     belongs_to :brand
+    has_many :order_items
 
     has_one_attached :image, dependent: :destroy
     validates :title, presence: true

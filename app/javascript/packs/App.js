@@ -190,7 +190,7 @@ class App extends React.Component {
                 </div>
               </Route>
               <Route path="/cart">
-                <CartList />
+                <CartList user={this.state.user} />
               </Route>
               <Route path="*">
                 <NotFound />
