@@ -73,7 +73,7 @@ class ManageCategories extends React.Component {
         )}
         {!this.state.create && !this.state.update ? (
           <div>
-            <table className="table table-hover">
+            <table className="table table-hover table-striped">
               <thead>
                 <tr>
                   <th scope="col">Category ID</th>
@@ -87,10 +87,8 @@ class ManageCategories extends React.Component {
                     <th scope="row">{element.id}</th>
                     <td>{element.name}</td>
                     <td>
-                      <button className="btn btn-success">Show</button>
-                      {/* <Link to={`/categories/${element.id}/update`}> */}
                       <button
-                        className="btn btn-warning"
+                        className="btn btn-outline-primary me-2 btn-sm"
                         onClick={() =>
                           this.setState({
                             update: !this.state.update,
@@ -100,9 +98,8 @@ class ManageCategories extends React.Component {
                       >
                         Update
                       </button>
-                      {/* </Link> */}
                       <button
-                        className="btn btn-danger"
+                        className="btn btn-danger btn-sm"
                         onClick={() => this.deleteCategory(element.id)}
                       >
                         Delete
