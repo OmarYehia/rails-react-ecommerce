@@ -12,7 +12,8 @@ class SellerForm extends React.Component {
             username: "",
             errors: [],
             error: "",
-            redirect: false
+            redirect: false,
+            success: false
         }
     }
     change = (e) => {
@@ -35,8 +36,10 @@ class SellerForm extends React.Component {
         }).then(response => response.json())
             .then(result => {
                 if (!result.error) {
+                    this.state.errors = [];
+                    this.state.error = "";
                     console.log(result.token);
-                    this.setState({ redirect: "/" })
+                    this.setState({ success: true })
                 }
                 else {
                     console.log(result.error);
@@ -66,7 +69,7 @@ class SellerForm extends React.Component {
                         {element}
                     </div>
                 )}</div>
-
+                {this.state.success ? <div className="alert alert-success"> Seller Added Successfully!</div> : ""}
                 <h1>{this.state.error}</h1>
                 <div className="form-group" style={{ padding: 10 }}>
                     <label for="exampleInputUsername">Username</label>

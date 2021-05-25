@@ -63,41 +63,33 @@ class AdminProfile extends React.Component {
           <div>
             <ul className="nav justify-content-center">
               <li className="nav-item">
-                <Link className="nav-link active" to={`${this.state.url}/edit`}>
+                <Link className="nav-link active" to={`/profile/edit`}>
                   Edit Profile
                 </Link>
               </li>
               <li className="nav-item">
                 <Link
                   className="nav-link"
-                  to={`${this.state.url}/manageseller`}
+                  to={`/profile/manageseller`}
                 >
                   Manage Sellers
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={`${this.state.url}/managestore`}>
+                <Link className="nav-link" to={`/profile/managestore`}>
                   Manage Stores
                 </Link>
               </li>
               <li className="nav-item">
                 <Link
                   className="nav-link"
-                  to={`${this.state.url}/managecategories`}
+                  to={`/profile/managecategories`}
                 >
-                  Manage Categories
+                  Manage Categories, Brands & Products
                 </Link>
               </li>
               <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to={`${this.state.url}/managebrands`}
-                >
-                  Manage Brands
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to={`${this.state.url}/stats`}>
+                <Link className="nav-link" to={`/profile/stats`}>
                   View Stats
                 </Link>
               </li>
@@ -152,9 +144,9 @@ class AdminProfile extends React.Component {
               <Route path="/profile/managecategories">
                 <ManageCategories getCookie={this.props.getCookie} />
               </Route>
-              {/* <Route path="/profile/managebrands">
-                                <ManageBrands getCookie={this.props.getCookie} />
-                            </Route> */}
+              <Route path="/profile/managebrands">
+                <ManageBrands getCookie={this.props.getCookie} />
+              </Route>
               <Route path="/profile/stats">
                 <h1>Stats</h1>
               </Route>

@@ -1,10 +1,10 @@
 import React from "react";
 import { Redirect, browserHistory, Link } from "react-router-dom";
-import CategoryForm from "../../Category/CategoryForm/CategoryForm";
-import CategoryUpdateForm from "../../Category/CategoryUpdateForm/CategoryUpdateForm";
-import ManageBrands from "./ManageBrands";
+import ProductForm from "../../Product/ProductCreateForm/ProductCreateForm"
+import ProductUpdateForm from "../../Product/ProductUpdateForm/ProductUpdateForm"
 
 import { Ring } from "react-awesome-spinners";
+import { element } from "prop-types";
 class ManageCategories extends React.Component {
   constructor() {
     super();
@@ -23,19 +23,11 @@ class ManageCategories extends React.Component {
     };
   }
   componentDidMount() {
-    fetch("/api/v1/categories", {
-      headers: {
-        Authorization: `Bearer ${this.props.getCookie("Authorization")}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        this.setState({ categories: result.data, loading: false });
-      });
+      this.setState({loading: false})
   }
-  deleteCategory = (categoryId) => {
+  deleteProduct = (productId) => {
     if (confirm("Are you sure about this?")) {
-      fetch(`/api/v1/categories/${categoryId}`, {
+      fetch(`/api/v1/products/${productId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${this.props.getCookie("Authorization")}`,
@@ -52,17 +44,6 @@ class ManageCategories extends React.Component {
         });
     }
   };
-  getBrands = (categoryId) => {
-    fetch(`/api/v1/categories/${categoryId}/brands`,{
-      headers :{
-        "Authorization" : `Bearer ${this.props.getCookie("Authorization")}`
-      }
-    })
-    .then(response => response.json())
-    .then(result => {
-      this.setState({showBrands: true, brands:result.data, categoryId: categoryId})
-    })
-  }
   render() {
     return this.state.loading ? (
       <Ring />
@@ -71,7 +52,7 @@ class ManageCategories extends React.Component {
         {this.state.deleteSuccess ? (
           <center>
             <div className="alert alert-success">
-              Category deleted successfully !
+              Product deleted successfully !
             </div>
           </center>
         ) : (
@@ -80,29 +61,34 @@ class ManageCategories extends React.Component {
         {this.state.deleteFail ? (
           <center>
             <div className="alert alert-danger">
-              Category was not deleted, Contact an admin for help.
+              Product was not deleted, Contact an admin for help.
             </div>
           </center>
         ) : (
           ""
         )}
-        {!this.state.create && !this.state.update && !this.state.showBrands ? (
+        {!this.state.create && !this.state.update ? (
           <div>
             <table className="table table-hover">
               <thead>
                 <tr>
-                  <th scope="col">Category ID</th>
+                  <th scope="col">Product ID</th>
                   <th scope="col">Name</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Price</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {this.state.categories.map((element) => (
+                {this.props.products.map((element) => (
                   <tr key={element.id}>
                     <th scope="row">{element.id}</th>
-                    <td>{element.name}</td>
+                    <td>{element.title}</td>
+                    <td>{element.description}</td>
+                    <td>x{element.quantity}</td>
+                    <td>{element.price} L.E</td>
                     <td>
-                      <button className="btn btn-success" onClick={()=>this.getBrands(element.id)}>Show Brands</button>
                       {/* <Link to={`/categories/${element.id}/update`}> */}
                       <button
                         className="btn btn-warning"
@@ -118,7 +104,7 @@ class ManageCategories extends React.Component {
                       {/* </Link> */}
                       <button
                         className="btn btn-danger"
-                        onClick={() => this.deleteCategory(element.id)}
+                        onClick={() => this.deleteProduct(element.id)}
                       >
                         Delete
                       </button>
@@ -131,7 +117,7 @@ class ManageCategories extends React.Component {
               className="btn btn-primary"
               onClick={() => this.setState({ create: !this.state.create })}
             >
-              Create New Category
+              Create New Product
             </button>
           </div>
         ) : (
@@ -139,7 +125,7 @@ class ManageCategories extends React.Component {
         )}
         {this.state.create && (
           <div className="d-flex flex-column justify-content-center">
-            <CategoryForm />
+            <ProductForm getCookie={this.props.getCookie} brandId={this.props.brandId}/>
             <button
               className="btn btn-primary ms-auto mt-3 me-5"
               onClick={() => {
@@ -147,13 +133,13 @@ class ManageCategories extends React.Component {
                 this.componentDidMount();
               }}
             >
-              Back to Manage Categories
+              Back to Manage Brands
             </button>
           </div>
         )}
         {this.state.update && (
           <div className="d-flex flex-column justify-content-center">
-            <CategoryUpdateForm categoryId={this.state.updateID} />
+            <ProductUpdateForm productId={this.state.updateID} />
             <button
               className="btn btn-primary ms-auto mt-3 me-5"
               onClick={() => {
@@ -161,24 +147,11 @@ class ManageCategories extends React.Component {
                 this.componentDidMount();
               }}
             >
-              Back to Manage Categories
+              Back to Manage Brands
             </button>
           </div>
         )}
-        {this.state.showBrands && (
-          <div className="d-flex flex-column justify-content-center">
-            <ManageBrands brands={this.state.brands} getCookie={this.props.getCookie} updateParent={this.componentDidMount} categoryId={this.state.categoryId}/>
-            <button
-              className="btn btn-primary ms-auto mt-3 me-5"
-              onClick={() => {
-                this.setState({ showBrands: !this.state.showBrands });
-                this.componentDidMount();
-              }}
-            >
-              Back to Manage Categories
-            </button>
-          </div>
-        )}
+        
       </div>
     );
   }

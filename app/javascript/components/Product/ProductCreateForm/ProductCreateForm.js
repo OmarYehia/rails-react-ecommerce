@@ -3,8 +3,8 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-const ProductCreateForm = () => {
-  const { brandId } = useParams();
+const ProductCreateForm = ({brandId}) => {
+  // const { brandId } = useParams();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -16,7 +16,7 @@ const ProductCreateForm = () => {
   const [quantityError, setQuantityError] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
-  const [brand, setBrand] = useState(null);
+  const [product, setProduct] = useState(null);
   const [cookies, setCookies] = useCookies();
   const [authorizationError, setAuthorizationError] = useState(null);
 
@@ -99,7 +99,7 @@ const ProductCreateForm = () => {
               setImageError(data.errors.image);
             }
           } else {
-            setBrand(data.data.brand);
+            setProduct(data.data.product.title);
             setIsAdded(true);
             document.querySelector("#brandName").classList.remove("is-invalid");
             document
@@ -133,7 +133,7 @@ const ProductCreateForm = () => {
       <form className="border category-form shadow-sm" onSubmit={handleSubmit}>
         {isAdded && (
           <div className="alert alert-success mb-3 text-center" role="alert">
-            Product {product.title} was added successfully.
+            Product {product} was added successfully.
             <Link to="#" className="alert-link">
               <br />
               Click here
