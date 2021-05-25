@@ -21,6 +21,7 @@ import Navbar from "../components/Navbar/Navbar";
 import NotFound from "../components/NotFound/NotFound";
 import CartList from "../components/ShoppingCart/CartList/CartList";
 import StoreForm from "../components/Store/StoreForm/StoreForm";
+import StoreList from "../components/Store/StoreList/StoreList";
 import SellerForm from "../components/Auth/SellersForm/SellerForm";
 import UpdateForm from "../components/Auth/UpdateForm/UpdateForm";
 import StoreUpdateForm from "../components/Store/StoreUpdateForm/StoreUpdateForm";
@@ -28,8 +29,12 @@ import StoreUpdateForm from "../components/Store/StoreUpdateForm/StoreUpdateForm
 import ProductList from "../components/Product/ProductList/ProductList";
 import ProductUpdateForm from "../components/Product/ProductUpdateForm/ProductUpdateForm";
 import ProductCreateForm from "../components/Product/ProductCreateForm/ProductCreateForm";
+<<<<<<< HEAD
 import ProductPage from "../components/Product/ProductPage/ProductPage";
 import Cart from "../components/Cart/Cart";
+=======
+import OrderList from "../components/Order/OrderList/OrderList";
+>>>>>>> 99af947d55b758ed3a4ed9e239932fae0c6db4a1
 
 class App extends React.Component {
   constructor() {
@@ -122,6 +127,14 @@ class App extends React.Component {
                 component={ProductCreateForm}
               />
 
+              <Route exact path="/stores">
+                <StoreList title="Stores" />
+              </Route>
+
+              <Route exact path="/categories">
+                <CategoryList title="Categories" />
+              </Route>
+
               <Route exact path="/categories">
                 <CategoryList title="Categories" />
               </Route>
@@ -194,7 +207,10 @@ class App extends React.Component {
                 )}
               </Route>
               <Route path="/cart">
-                <CartList />
+                {this.state.user && <CartList user={this.state.user} />}
+              </Route>
+              <Route path="/orders">
+                {this.state.user && <OrderList user={this.state.user} />}
               </Route>
               <Route path="*">
                 <NotFound />

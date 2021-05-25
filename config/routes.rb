@@ -2,9 +2,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      get 'orders/' , to:"order#index"
+      get 'orders/:user_id' , to:"order#index"
       post 'orders/', to:"order#create"
-      get 'order/show'
+      get 'stores/:id/orders', to: "order#get_order_items"
+      post 'orders/:id/approve', to: "order#approve"
+      post 'orders/:id/decline', to: "order#decline"
     end
   end
   namespace :api do
@@ -13,6 +15,7 @@ Rails.application.routes.draw do
       post 'stores/', to: "store#create"
       get 'stores/:id', to: "store#show"
       get 'users/:id/store', to: "store#show_by_userId"
+      get 'stores/:id/products', to: "store#get_products"
       delete 'stores/:id', to: "store#destroy"
       put 'stores/:id', to: "store#update"
     end

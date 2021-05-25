@@ -91,7 +91,7 @@ class ManageCategories extends React.Component {
                     <td>
                       {/* <Link to={`/categories/${element.id}/update`}> */}
                       <button
-                        className="btn btn-warning"
+                        className="btn btn-warning me-2 btn-sm"
                         onClick={() =>
                           this.setState({
                             update: !this.state.update,
@@ -103,7 +103,7 @@ class ManageCategories extends React.Component {
                       </button>
                       {/* </Link> */}
                       <button
-                        className="btn btn-danger"
+                        className="btn btn-danger me-2 btn-sm"
                         onClick={() => this.deleteProduct(element.id)}
                       >
                         Delete

@@ -87,13 +87,13 @@ class ManageStores extends React.Component {
                                 <td>{element.summary}</td>
                                 <td>{element.owner.username}</td>
                                 <td>
-                                    <button className="btn btn-warning" onClick={() =>
+                                    <button className="btn btn-warning me-2 btn-sm" onClick={() =>
                                         this.setState({
                                             update: !this.state.update,
                                             updateID: element.id,
                                         })
                                     }>Update</button>
-                                    <button className="btn btn-danger" onClick={() => this.deleteCategory(element.id)}>Delete</button>
+                                    <button className="btn btn-danger me-2 btn-sm" onClick={() => this.deleteCategory(element.id)}>Delete</button>
                                 </td>
                             </tr>
                         )}

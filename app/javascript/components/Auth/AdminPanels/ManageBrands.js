@@ -98,10 +98,10 @@ class ManageBrands extends React.Component {
                     <td>{element.name}</td>
                     <td>{element.category.categoryName}</td>
                     <td>
-                      <button className="btn btn-success" onClick={()=>this.getProducts(element.id)}>Show Products</button>
+                      <button className="btn btn-success me-2 btn-sm" onClick={()=>this.getProducts(element.id)}>Show Products</button>
                       {/* <Link to={`/categories/${element.id}/update`}> */}
                       <button
-                        className="btn btn-warning"
+                        className="btn btn-warning me-2 btn-sm"
                         onClick={() =>
                           this.setState({
                             update: !this.state.update,
@@ -113,7 +113,7 @@ class ManageBrands extends React.Component {
                       </button>
                       {/* </Link> */}
                       <button
-                        className="btn btn-danger"
+                        className="btn btn-danger btn-sm"
                         onClick={() => this.deleteBrand(element.id)}
                       >
                         Delete
