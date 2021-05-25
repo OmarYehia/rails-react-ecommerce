@@ -6,7 +6,7 @@ import ManageProducts from "./ManageProducts"
 
 import { Ring } from "react-awesome-spinners";
 class ManageBrands extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       categories: null,
@@ -19,7 +19,9 @@ class ManageBrands extends React.Component {
       showProducts:false,
       updateID: null,
       brandId:null,
-      products:[]
+      products:[],
+      categoryId: props.categoryId,
+      brands: props.brands
     };
   }
   componentDidMount() {
@@ -90,7 +92,7 @@ class ManageBrands extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.brands.map((element) => (
+                {this.state.brands.map((element) => (
                   <tr key={element.id}>
                     <th scope="row">{element.id}</th>
                     <td>{element.name}</td>
@@ -165,8 +167,8 @@ class ManageBrands extends React.Component {
             <button
               className="btn btn-primary ms-auto mt-3 me-5"
               onClick={() => {
-                this.setState({ update: !this.state.update, updateID: null });
-                this.componentDidMount();
+                this.setState({ showProducts: !this.state.showProducts });
+                this.getBrands(this.state.categoryId);
               }}
             >
               Back to Manage Brands
