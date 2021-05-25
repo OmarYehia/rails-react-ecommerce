@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get 'orders/:user_id' , to:"order#index"
       post 'orders/', to:"order#create"
-      get 'order/show'
+      get 'stores/:id/orders', to: "order#get_order_items"
     end
   end
   namespace :api do
