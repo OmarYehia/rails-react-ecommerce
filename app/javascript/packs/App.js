@@ -1,11 +1,17 @@
 import React from "react";
-import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 import BrandList from "../components/Brand/BrandList/BrandList";
 import CategoryList from "../components/Category/CategoryList/CategoryList";
 import LoginForm from "../components/Auth/Login/LoginForm";
 import SignUpForm from "../components/Auth/SignUp/SignUpForm";
 import Profile from "../components/Auth/Profile/Profile";
 import AdminProfile from "../components/Auth/Profile/AdminProfile";
+import SellerProfile from "../components/Auth/Profile/SellerProfile";
 import CategoryForm from "../components/Category/CategoryForm/CategoryForm";
 import CategoryUpdateForm from "../components/Category/CategoryUpdateForm/CategoryUpdateForm";
 import BrandCreateForm from "../components/Brand/BrandCreateForm/BrandCreateForm";
@@ -15,11 +21,12 @@ import Navbar from "../components/Navbar/Navbar";
 import NotFound from "../components/NotFound/NotFound";
 import CartList from "../components/ShoppingCart/CartList/CartList";
 import StoreForm from "../components/Store/StoreForm/StoreForm";
+import StoreList from "../components/Store/StoreList/StoreList";
 import SellerForm from "../components/Auth/SellersForm/SellerForm";
 import UpdateForm from "../components/Auth/UpdateForm/UpdateForm";
 import StoreUpdateForm from "../components/Store/StoreUpdateForm/StoreUpdateForm";
 
-import ProductList from '../components/Product/ProductList/ProductList'
+import ProductList from "../components/Product/ProductList/ProductList";
 import ProductUpdateForm from "../components/Product/ProductUpdateForm/ProductUpdateForm";
 import ProductCreateForm from "../components/Product/ProductCreateForm/ProductCreateForm";
 import OrderList from "../components/Order/OrderList/OrderList";
@@ -40,8 +47,8 @@ class App extends React.Component {
   };
 
   updateApp = () => {
-    this.forceUpdate()
-  }
+    this.forceUpdate();
+  };
 
   updateUser = (returnedUser) => {
     localStorage.setItem("user", JSON.stringify(returnedUser));
@@ -105,6 +112,14 @@ class App extends React.Component {
                 component={ProductCreateForm}
               />
 
+              <Route exact path="/stores">
+                <StoreList title="Stores" />
+              </Route>
+
+              <Route exact path="/categories">
+                <CategoryList title="Categories" />
+              </Route>
+
               <Route exact path="/categories">
                 <CategoryList title="Categories" />
               </Route>
@@ -155,6 +170,12 @@ class App extends React.Component {
                       setUser={this.updateUser}
                       getCookie={this.getCookie}
                     />
+                  ) : JSON.parse(localStorage.getItem("user")).role ===
+                    "seller" ? (
+                    <SellerProfile
+                      user={this.state.user}
+                      getCookie={this.getCookie}
+                    />
                   ) : (
                     <Profile
                       user={this.state.user}
@@ -169,26 +190,6 @@ class App extends React.Component {
                     getCookie={this.getCookie}
                   />
                 )}
-              </Route>
-              <Route path="profile/edit">
-                <div>
-                  <h1>{this.state.errors}</h1>
-                  <span>Username: </span>
-                  <input
-                    type="text"
-                    name="username"
-                    value={this.state.username}
-                    onChange={this.change}
-                  />
-                  <span>Email: </span>
-                  <input
-                    type="email"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.change}
-                  />
-                  <button onClick={this.update}>Update Profile</button>
-                </div>
               </Route>
               <Route path="/cart">
                 {this.state.user && <CartList user={this.state.user} />}

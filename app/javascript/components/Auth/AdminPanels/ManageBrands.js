@@ -6,7 +6,7 @@ import ManageProducts from "./ManageProducts"
 
 import { Ring } from "react-awesome-spinners";
 class ManageBrands extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       categories: null,
@@ -19,7 +19,9 @@ class ManageBrands extends React.Component {
       showProducts:false,
       updateID: null,
       brandId:null,
-      products:[]
+      products:[],
+      categoryId: props.categoryId,
+      brands: props.brands
     };
   }
   componentDidMount() {
@@ -90,16 +92,16 @@ class ManageBrands extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.brands.map((element) => (
+                {this.state.brands.map((element) => (
                   <tr key={element.id}>
                     <th scope="row">{element.id}</th>
                     <td>{element.name}</td>
                     <td>{element.category.categoryName}</td>
                     <td>
-                      <button className="btn btn-success" onClick={()=>this.getProducts(element.id)}>Show Products</button>
+                      <button className="btn btn-success me-2 btn-sm" onClick={()=>this.getProducts(element.id)}>Show Products</button>
                       {/* <Link to={`/categories/${element.id}/update`}> */}
                       <button
-                        className="btn btn-warning"
+                        className="btn btn-warning me-2 btn-sm"
                         onClick={() =>
                           this.setState({
                             update: !this.state.update,
@@ -111,7 +113,7 @@ class ManageBrands extends React.Component {
                       </button>
                       {/* </Link> */}
                       <button
-                        className="btn btn-danger"
+                        className="btn btn-danger btn-sm"
                         onClick={() => this.deleteBrand(element.id)}
                       >
                         Delete
@@ -165,8 +167,8 @@ class ManageBrands extends React.Component {
             <button
               className="btn btn-primary ms-auto mt-3 me-5"
               onClick={() => {
-                this.setState({ update: !this.state.update, updateID: null });
-                this.componentDidMount();
+                this.setState({ showProducts: !this.state.showProducts });
+                this.getBrands(this.state.categoryId);
               }}
             >
               Back to Manage Brands

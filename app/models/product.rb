@@ -4,6 +4,8 @@ class Product < ApplicationRecord
     belongs_to :brand
     has_many :order_items
 
+    belongs_to :store
+    
     has_one_attached :image, dependent: :destroy
     validates :title, presence: true
     validates :description, presence: true 

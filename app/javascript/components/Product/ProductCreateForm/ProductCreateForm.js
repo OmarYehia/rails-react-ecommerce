@@ -236,6 +236,7 @@ const ProductCreateForm = ({brandId}) => {
             type="submit"
             className="btn btn-outline-primary"
             id="submitBtn"
+            onSubmit={onSubmitHandler}
           >
             Add Product
           </button>
