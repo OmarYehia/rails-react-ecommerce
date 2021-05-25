@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-const ProductCreateForm = ({brandId}) => {
+const ProductCreateForm = ({ storeId }) => {
   // const { brandId } = useParams();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -19,6 +19,27 @@ const ProductCreateForm = ({brandId}) => {
   const [product, setProduct] = useState(null);
   const [cookies, setCookies] = useCookies();
   const [authorizationError, setAuthorizationError] = useState(null);
+  const [categories, setCategories] = useState(null);
+  const [brands, setBrands] = useState(null);
+  const [category, setCategory] = useState(null);
+  const [brand, setBrand] = useState(null);
+
+  useEffect(() => {
+    fetch("/api/v1/categories")
+      .then((res) => res.json())
+      .then((data) => {
+        setCategories(data.data);
+      });
+
+    if (category) {
+      fetch(`/api/v1/categories/${category}/brands`)
+        .then((res) => res.json())
+        .then((data) => {
+          setBrands(data.data);
+          setBrand(data.data[0].id);
+        });
+    }
+  }, [category]);
 
   const verifyImageType = (file) => {
     const imageType = file.type;
@@ -56,9 +77,10 @@ const ProductCreateForm = ({brandId}) => {
       formData.append("description", description);
       formData.append("price", price);
       formData.append("quantity", quantity);
+      formData.append("storeId", storeId);
 
-      console.log(formData);
-      fetch(`/api/v1/brands/${brandId}/products`, {
+      console.log(brand);
+      fetch(`/api/v1/brands/${brand}/products`, {
         method: "POST",
         body: formData,
         headers: {
@@ -83,16 +105,16 @@ const ProductCreateForm = ({brandId}) => {
               setNameError(data.errors.title);
             }
             if (data.errors.description) {
-                document.querySelector("#brandName").classList.add("is-invalid");
-                setDescriptionError(data.errors.description);
+              document.querySelector("#brandName").classList.add("is-invalid");
+              setDescriptionError(data.errors.description);
             }
             if (data.errors.price) {
-                document.querySelector("#brandName").classList.add("is-invalid");
-                setPriceError(data.errors.price);
+              document.querySelector("#brandName").classList.add("is-invalid");
+              setPriceError(data.errors.price);
             }
             if (data.errors.quantity) {
-                document.querySelector("#brandName").classList.add("is-invalid");
-                setQuantityError(data.errors.quantity);
+              document.querySelector("#brandName").classList.add("is-invalid");
+              setQuantityError(data.errors.quantity);
             }
             if (data.errors.image) {
               document.querySelector("#brandImage").classList.add("is-invalid");
@@ -105,11 +127,11 @@ const ProductCreateForm = ({brandId}) => {
             document
               .querySelector("#brandImage")
               .classList.remove("is-invalid");
-              setTitleError("");
-              setDescription("");
-              setPriceError("");
-              setQuantityError("");
-              setImageError("");
+            setTitleError("");
+            setDescription("");
+            setPriceError("");
+            setQuantityError("");
+            setImageError("");
             setAuthorizationError(false);
           }
           console.log(data);
@@ -214,6 +236,46 @@ const ProductCreateForm = ({brandId}) => {
             </div>
           )}
         </div>
+        {categories && (
+          <div className="mb-3">
+            <label htmlFor="category" className="form-label">
+              Select a Category
+            </label>
+            <select
+              name="category"
+              id="category"
+              className="form-select"
+              onChange={(e) => {
+                setCategory(e.target.value);
+              }}
+            >
+              {categories.map((category) => (
+                <option value={category.id} key={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+        {brands && (
+          <div className="mb-3">
+            <label htmlFor="brand" className="form-label">
+              Select a brand
+            </label>
+            <select
+              name="brand"
+              id="brand"
+              className="form-select"
+              onChange={(e) => setBrand(e.target.value)}
+            >
+              {brands.map((brand) => (
+                <option value={brand.id} key={brand.id}>
+                  {brand.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
         <div className="mb-3">
           <label htmlFor="brandImage" className="form-label">
             Brand Image
@@ -236,7 +298,7 @@ const ProductCreateForm = ({brandId}) => {
             type="submit"
             className="btn btn-outline-primary"
             id="submitBtn"
-            onSubmit={onSubmitHandler}
+            onSubmit={handleSubmit}
           >
             Add Product
           </button>
