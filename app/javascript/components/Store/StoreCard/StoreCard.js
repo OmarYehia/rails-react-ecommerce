@@ -4,10 +4,11 @@ import "./StoreCard.css";
 const StoreCard = ({ store }) => {
   return (
     <div className="card category-card shadow-sm">
-      {store && <h3>Store name: {store.name}</h3>}
-      {store && <h3>Summary: {store.summary}</h3>}
-      {store && <h3>Owner Email: {store.owner.email}</h3>}
-      {store && <h3>{store.summary}</h3>}
+      {store && <p><strong>Store name:</strong> {store.name}</p>}
+      {store && <p><strong>Summary:</strong> {store.summary}</p>}
+      {store && <p><strong>Contact Info</strong></p>}
+      {store && <p><strong>Owner Email:</strong> {store.owner.email}</p>}
+      {store && <p>{store.summary}</p>}
     </div>
   );
 };

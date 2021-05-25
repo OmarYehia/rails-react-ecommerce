@@ -4,11 +4,11 @@ import ProductCard from '../ProductCard/ProductCard'
 import { Link, useParams } from "react-router-dom";
 
 const ProductList = () => {
-    const { storeId } = useParams();
+    const { brandId } = useParams();
     const [products, setProducts] = useState(null);
 
     useEffect(() => {
-        fetch(`/api/v1/stores/${storeId}/products`)
+        fetch(`/api/v1/brands/${brandId}/products`)
         .then((res) => {
             return res.json();
         })
