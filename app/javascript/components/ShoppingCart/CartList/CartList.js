@@ -12,6 +12,7 @@ const CartList = ({user}) => {
     
     useEffect(()=>{
         if (cart){
+            console.log("cartfelcartlist", cart)
             const cartArray = cart.split(",");
             console.log(cartArray);
             setProducts(cartArray);
@@ -55,7 +56,7 @@ const CartList = ({user}) => {
     }
 
     return (
-        <div className="cart-list">
+        <div className="container cart-list">
             {successPurchase && <div className="alert alert-success"> <h2>Successfuly purchased</h2></div>}
             {error && <div className="alert alert-danger"> <h2>Something went wrong!</h2></div>}
             {!products && <div>Shopping cart is empty</div>}
@@ -63,7 +64,7 @@ const CartList = ({user}) => {
             products.map(product => (
                 <CartItem key={product} productId={product} setCart={setCart} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>
             ))}
-           <button className="btn btn-primary" onClick={handleCheckout}>Checkout</button>
+          {products &&  <button className="btn btn-primary" onClick={handleCheckout}>Checkout</button>}
         </div>
     )
 }

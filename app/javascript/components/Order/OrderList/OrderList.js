@@ -31,8 +31,8 @@ const OrderList = ({user}) => {
             {!orders && <div>You have No Orders</div>}
             {orders && 
             orders.map(order => (
-                <div>
-                    <h1>{order.id}</h1>
+                <div key={order.id}>
+                <h1>{order.id}</h1>
                 <OrderItem key={order.id} order={order} />
                 <hr/>
                 </div>
