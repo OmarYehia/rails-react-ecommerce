@@ -37,7 +37,7 @@ const Navbar = ({user, logout}) => {
             <i className="fas fa-user"></i>
             {user.username}
           </Link>
-          <Link to="/Cart">
+          <Link to="/cart">
             <i className="fas fa-shopping-cart"></i>
           </Link>
           <Link to="/orders">

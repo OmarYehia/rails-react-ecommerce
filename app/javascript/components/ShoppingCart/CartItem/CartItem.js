@@ -27,11 +27,11 @@ const CartItem = ({ productId, setCart, totalPrice, setTotalPrice }) => {
     }, [])
 
     const handleDelete = (id) => {
-        const cart = localStorage.getItem('cart');
+        const cart = JSON.parse(localStorage.getItem("cart"))
         console.log("cartfeldelete", cart)
-        const cartArray = cart.split(",");
-        const newArray = cartArray.filter(item => item != id)
-        localStorage.setItem('cart', newArray.join(','))
+     //   const cartArray = cart.split(",");
+        const newArray = cart.filter(item => item != id)
+        localStorage.setItem("cart", JSON.stringify(newArray))
         setCart(newArray)
     }
 

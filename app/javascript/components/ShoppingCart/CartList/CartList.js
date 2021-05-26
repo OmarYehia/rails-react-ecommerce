@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 
 const CartList = ({user}) => {
     const [products, setProducts] = useState(null);
-    const [cart, setCart] = useState(localStorage.getItem('cart'))
+    const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")))
     const [totalPrice, setTotalPrice] = useState(0);
     const [successPurchase, setSuccessPurchase] = useState(false);
     const [error, setError] = useState(false);
@@ -13,9 +13,9 @@ const CartList = ({user}) => {
     useEffect(()=>{
         if (cart){
             console.log("cartfelcartlist", cart)
-            const cartArray = cart.split(",");
-            console.log(cartArray);
-            setProducts(cartArray);
+            //const cartArray = cart.split(",");
+            //console.log(cartArray);
+            setProducts(cart);
         } else {
             setProducts(null)
         }
@@ -45,8 +45,8 @@ const CartList = ({user}) => {
 
         const jsonRes = await res.json();
         if (res.ok) {
-            localStorage.removeItem("cart");
-            setCart(null);
+            localStorage.setItem("cart", JSON.stringify([]))
+            setCart([]);
             setSuccessPurchase(true);
             setError(false);
         } else {
@@ -59,10 +59,10 @@ const CartList = ({user}) => {
         <div className="container cart-list">
             {successPurchase && <div className="alert alert-success"> <h2>Successfuly purchased</h2></div>}
             {error && <div className="alert alert-danger"> <h2>Something went wrong!</h2></div>}
-            {!products && <div>Shopping cart is empty</div>}
+            {!products || !(cart.length) && <div>Shopping cart is empty</div>}
             {products && 
-            products.map(product => (
-                <CartItem key={product} productId={product} setCart={setCart} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>
+            products.map((product, index) => (
+                <CartItem key={index} productId={product} setCart={setCart} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>
             ))}
           {products &&  <button className="btn btn-primary" onClick={handleCheckout}>Checkout</button>}
         </div>
