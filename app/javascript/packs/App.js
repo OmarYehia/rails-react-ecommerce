@@ -98,11 +98,7 @@ class App extends React.Component {
               <Route exact path="/">
                 <LandingPage />
               </Route>
-              <Route
-                exact
-                path="/cart"
-                component={Cart}
-              />
+              <Route exact path="/cart" component={Cart} />
               <Route
                 exact
                 path="/categories/:categoryId/:brandName/products/:productId"
