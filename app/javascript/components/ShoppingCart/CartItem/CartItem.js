@@ -38,24 +38,15 @@ const CartItem = ({ productId, setCart, totalPrice, setTotalPrice }) => {
     return (
         <div className="cart-item" key={productId}>
             {product && <div className="card-item row" id={product.id}>
-            <div className="col-3">
-                <img src={product.imageUrl} height="150" width="150"/>
+            <div className="row  align-items-center pt-3 pb-2 border-bottom">
+                <div className="item pr-2 col-2"> <img src={product.imageUrl}  alt=".." width="150" height="150"/>       
+                </div>
+                <div className="col-3"> <b className="h5">{product.title}</b></div>
+                <div className="col-3">  { <input type="number"  value={quantity} min={1}  max={product.quantity} onChange={(e)=>setQuantity(e.target.value)}/> }</div>
+                <div className="col-2"> <b className="h5">{product.price * quantity}$</b> </div>
+                <div className="col-2">  <p onClick={() => handleDelete(product.id)}><i className="btn btn-danger btn-sm far fa-trash-alt"></i></p> </div>
             </div>
-            <div className="col-3">
-                <p>{product.title}</p>
-            </div>
-            <div className="col-2">
-                { <input type="number"  value={quantity} min={1}  max={product.quantity} onChange={(e)=>setQuantity(e.target.value)}/> }
-               
-            </div>
-            <div className="col-2">
-                { <p>{product.price * quantity}</p> }
-                
-
-            </div>
-            <div className="col-1">
-                <p onClick={() => handleDelete(product.id)}><i className="btn btn-danger btn-sm far fa-trash-alt"></i></p>
-            </div>
+            
         </div>}
         </div>
         

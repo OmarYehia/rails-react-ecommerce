@@ -60,11 +60,13 @@ const CartList = ({user}) => {
             {successPurchase && <div className="alert alert-success"> <h2>Successfuly purchased</h2></div>}
             {error && <div className="alert alert-danger"> <h2>Something went wrong!</h2></div>}
             {!products || !(cart.length) && <div>Shopping cart is empty</div>}
+            
             {products && 
             products.map((product, index) => (
+                
                 <CartItem key={index} productId={product} setCart={setCart} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>
             ))}
-          {products &&  <button className="btn btn-primary" onClick={handleCheckout}>Checkout</button>}
+          {products &&  <button className="btn btn-primary mt-3" onClick={handleCheckout}>Checkout</button>}
         </div>
     )
 }
