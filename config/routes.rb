@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  default_url_options :host => "https://rails-react-ecommerce.herokuapp.com/"
+  config.action_mailer.default_url_options = { host: 'https://rails-react-ecommerce.herokuapp.com/' } # for absolute urls in email
+
+
   namespace :api do
     namespace :v1 do
       get 'orders/:user_id' , to:"order#index"
