@@ -32,7 +32,7 @@ const OrderList = ({user}) => {
             {orders && 
             orders.map(order => (
                 <div key={order.id}>
-                <h1>{order.id}</h1>
+                <p><b>Order ID: </b>{order.id}</p>
                 <OrderItem key={order.id} order={order} />
                 <hr/>
                 </div>
