@@ -100,11 +100,6 @@ class App extends React.Component {
               </Route>
               <Route
                 exact
-                path="/cart"
-                component={Cart}
-              />
-              <Route
-                exact
                 path="/categories/:categoryId/:brandName/products/:productId"
                 component={ProductPage}
               />

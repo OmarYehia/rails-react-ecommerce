@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const OrderDetails = ({ orderItem, order }) => {
     const [product, setProduct] = useState(null);
-
+   
 
     useEffect(()=>{
       fetch(`/api/v1/products/${orderItem.product_id}`)
@@ -28,24 +28,16 @@ const OrderDetails = ({ orderItem, order }) => {
     
     return (
         <div key={orderItem.id}>
-            {product && <div className="card-item row" id={orderItem.id}>
-            <div className="col-2">
-                <img src={product.imageUrl} height="120" width="120"/>
-            </div>
-            <div className="col-2">
-                <p>{product.title}</p>
-            </div>
-            <div className="col-2">
-                <p>{orderItem.quantity}</p>
-            </div>
-            <div className="col-2">
-                <p>{orderItem.price}</p>
-            </div>
-            <div className="col-2">
-                <p>{orderItem.state}</p>
-            </div>
-            <div className="col-2">
-                <p>{order.created_at}</p>
+            {product && <div className="card-item" id={orderItem.id}>
+                <div className="row  align-items-center pt-3 pb-2 ">
+                <div className="item pr-2 col-2"> <img src={product.imageUrl} alt=".." width="150" height="150"/> 
+                </div>
+                <div className="col-2"> <b className="h5">{product.title}</b></div>
+                <div className="col-2"> <b>{orderItem.quantity}</b></div>
+                <div className="col-2"> <b className="h5">{orderItem.price}$</b> </div>
+                <div className="col-2"> <p className="h5">{orderItem.state}</p> </div>
+                <div className="col-2"> <p className="">{order.created_at.created_at}</p> </div>
+           
             </div>
             
         </div>}

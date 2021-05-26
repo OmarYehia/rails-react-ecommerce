@@ -1,0 +1,35 @@
+.carousel-container {
+  margin: 20px 0;
+}
+
+.carousel div {
+  min-height: 300px;
+}
+
+.carousel .row {
+  display: flex !important;
+  background-color: rgba(68, 71, 77, 0.045);
+  padding: 20px;
+}
+
+.carousel-img {
+  height: 100%;
+  object-fit: contain;
+}
+
+.carousel h2 {
+  font-size: 4rem;
+}
+
+.carousel p {
+  font-size: 1.4rem;
+}
+
+.carousel a {
+  font-size: 1.2rem;
+  transition: 0.2s ease-in;
+}
+
+.carousel a:hover {
+  transform: scale(1.1);
+}

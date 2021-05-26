@@ -5,7 +5,7 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 const OrderItem = ({ order }) => {
     
     return (
-        <div>
+        <div key={order.id}>
             
             { order.order_items.map(orderItem => (
               <OrderDetails key={orderItem.id} orderItem={orderItem} order={order} />
