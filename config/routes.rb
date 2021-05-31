@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  # default_url_options :host => "https://rails-react-ecommerce.herokuapp.com/"
+  default_url_options :host => "https://rails-react-ecommerce.herokuapp.com/"
 
   namespace :api do
     namespace :v1 do
