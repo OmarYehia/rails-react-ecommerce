@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  default_url_options :host => "https://rails-react-ecommerce.herokuapp.com/"
+
   namespace :api do
     namespace :v1 do
       get 'orders/:user_id' , to:"order#index"
@@ -14,6 +16,7 @@ Rails.application.routes.draw do
       get 'stores/', to: "store#index"
       post 'stores/', to: "store#create"
       get 'stores/:id', to: "store#show"
+      get 'stores/:id/products', to: "store#products"
       get 'users/:id/store', to: "store#show_by_userId"
       get 'stores/:id/products', to: "store#get_products"
       delete 'stores/:id', to: "store#destroy"

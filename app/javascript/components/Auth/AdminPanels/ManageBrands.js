@@ -168,7 +168,6 @@ class ManageBrands extends React.Component {
               className="btn btn-primary ms-auto mt-3 me-5"
               onClick={() => {
                 this.setState({ showProducts: !this.state.showProducts });
-                this.getBrands(this.state.categoryId);
               }}
             >
               Back to Manage Brands

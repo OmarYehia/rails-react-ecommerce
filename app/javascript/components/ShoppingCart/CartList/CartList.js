@@ -26,10 +26,12 @@ const CartList = ({user}) => {
         const id = user.id
         const items = document.querySelectorAll(".card-item")
         items.forEach(item => {
+            console.log(item.children[0]);
             const orderItem = {
                 id: item.id,
-                quantity: item.children[2].firstChild.value
+                quantity: item.children[0].firstChild.value
             }
+
             orderItems.push(orderItem)
         });
 

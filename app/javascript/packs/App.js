@@ -154,6 +154,9 @@ class App extends React.Component {
               <Route path="/stores/new">
                 <StoreForm />
               </Route>
+              <Route path="/stores/:storeId/products">
+                <ProductList />
+              </Route>
               <Route path="/stores/:storeId/update">
                 <StoreUpdateForm />
               </Route>

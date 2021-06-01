@@ -1,0 +1,35 @@
+.category-card {
+    width: 95%;
+    margin: 1rem;
+  }
+  
+  .category-image {
+    height: 10rem;
+    width: 100%;
+    object-fit: cover;
+  }
+  
+  .card-body {
+    padding: 15px 0 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+  }
+  
+  .card-body a {
+    text-align: center;
+    color: #333;
+    text-decoration: none;
+    transition: 0.2s ease-in;
+  }
+  
+  .card-body a:hover {
+    color: rgb(51, 88, 155);
+  }
+  
+
+  .product-card {
+    width: 30%;
+    margin: 1rem;
+}
